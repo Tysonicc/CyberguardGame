@@ -50,7 +50,7 @@ namespace CyberguardGame
             // Przycisk Powrót 2
             btnBack_2 = new Button();
             btnBack_2.Text = "POWRÓT";
-            btnBack_2.Size = new System.Drawing.Size(100, 50);
+            btnBack_2.Size = new System.Drawing.Size(120, 50);
             btnBack_2.Location = new System.Drawing.Point(this.ClientSize.Width - btnBack.Width - 20, this.ClientSize.Height - btnBack.Height - 20);
             btnBack_2.Click += new EventHandler(BtnBack_Click_2);
             btnBack_2.Visible = false;
@@ -60,8 +60,8 @@ namespace CyberguardGame
             // Przycisk Poziom 1
             btnLevel1 = new Button();
             btnLevel1.Text = "POZIOM 1";
-            btnLevel1.Size = new System.Drawing.Size(100, 50);
-            btnLevel1.Location = new System.Drawing.Point(462, 200);
+            btnLevel1.Size = new System.Drawing.Size(125, 40);
+            btnLevel1.Location = new System.Drawing.Point(439, 385);
             btnLevel1.Click += new EventHandler(BtnLevel1_Click);
             btnLevel1.Visible = false;
             this.Controls.Add(btnLevel1);
@@ -69,8 +69,8 @@ namespace CyberguardGame
             // Przycisk Poziom 2
             btnLevel2 = new Button();
             btnLevel2.Text = "POZIOM 2";
-            btnLevel2.Size = new System.Drawing.Size(100, 50);
-            btnLevel2.Location = new System.Drawing.Point(462, 270);
+            btnLevel2.Size = new System.Drawing.Size(125, 40);
+            btnLevel2.Location = new System.Drawing.Point(439, 435);
             btnLevel2.Click += new EventHandler(BtnLevel2_Click);
             btnLevel2.Visible = false;
             btnLevel2.Enabled = false; // Zablokowany domyœlnie
@@ -79,8 +79,8 @@ namespace CyberguardGame
             // Przycisk Poziom 3
             btnLevel3 = new Button();
             btnLevel3.Text = "POZIOM 3";
-            btnLevel3.Size = new System.Drawing.Size(100, 50);
-            btnLevel3.Location = new System.Drawing.Point(462, 340);
+            btnLevel3.Size = new System.Drawing.Size(125, 40);
+            btnLevel3.Location = new System.Drawing.Point(439, 485);
             btnLevel3.Click += new EventHandler(BtnLevel3_Click);
             btnLevel3.Visible = false;
             btnLevel3.Enabled = false; // Zablokowany domyœlnie

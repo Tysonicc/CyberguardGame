@@ -35,7 +35,7 @@
             // 
             // BtnStart
             // 
-            BtnStart.Location = new Point(439, 390);
+            BtnStart.Location = new Point(439, 385);
             BtnStart.Margin = new Padding(5);
             BtnStart.Name = "BtnStart";
             BtnStart.Size = new Size(125, 40);
@@ -46,7 +46,7 @@
             // 
             // BtnControls
             // 
-            BtnControls.Location = new Point(439, 440);
+            BtnControls.Location = new Point(439, 435);
             BtnControls.Margin = new Padding(5);
             BtnControls.Name = "BtnControls";
             BtnControls.Size = new Size(125, 40);
@@ -57,7 +57,7 @@
             // 
             // BtnRules
             // 
-            BtnRules.Location = new Point(439, 490);
+            BtnRules.Location = new Point(439, 485);
             BtnRules.Margin = new Padding(5);
             BtnRules.Name = "BtnRules";
             BtnRules.Size = new Size(125, 40);
