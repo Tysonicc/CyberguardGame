@@ -31,7 +31,7 @@ namespace CyberguardGame
             infoLabel = new Label();
             infoLabel.Size = new System.Drawing.Size(500, 200);
             infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            infoLabel.Location = new System.Drawing.Point((this.ClientSize.Width - infoLabel.Width) / 2, (this.ClientSize.Height - infoLabel.Height) / 2 - 50);
+            infoLabel.Location = new System.Drawing.Point((this.ClientSize.Width - infoLabel.Width) / 2, (this.ClientSize.Height - infoLabel.Height) / 2);
             infoLabel.Font = new System.Drawing.Font("Arial", 12);
             infoLabel.Visible = false;
             infoLabel.Anchor = AnchorStyles.None;
@@ -50,7 +50,7 @@ namespace CyberguardGame
             // Przycisk Powrót 2
             btnBack_2 = new Button();
             btnBack_2.Text = "POWRÓT";
-            btnBack_2.Size = new System.Drawing.Size(120, 50);
+            btnBack_2.Size = new System.Drawing.Size(100, 50);
             btnBack_2.Location = new System.Drawing.Point(this.ClientSize.Width - btnBack.Width - 20, this.ClientSize.Height - btnBack.Height - 20);
             btnBack_2.Click += new EventHandler(BtnBack_Click_2);
             btnBack_2.Visible = false;
@@ -206,7 +206,7 @@ namespace CyberguardGame
         private void BtnBack_Click_2(object sender, EventArgs e)
         {
             infoLabel.Visible = false;
-            btnBack.Visible = false;
+            btnBack_2.Visible = false;
 
             foreach (Control control in this.Controls)
             {
