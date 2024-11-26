@@ -16,17 +16,45 @@ namespace CyberguardGame
         private bool level1Completed = false;
         private bool level2Completed = false;
 
+        private Panel mainPanel;
+
+        private Form activeLevel = new Form();
+
         public MainGame()
         {
             InitializeComponent();
-            CreateStartScreen();
+            StartScreen();
 
             this.BackgroundImage = Properties.Resources.JEMA_GER_1426_24_v1;
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        private void CreateStartScreen()
+        private void OpenLevel(Form LevelForm, object btnSender)
         {
+            if (activeLevel != null){
+                mainPanel.Controls.Remove(activeLevel);
+                activeLevel.Close();
+            }
+
+            activeLevel = LevelForm;
+            LevelForm.TopLevel = false;
+            LevelForm.FormBorderStyle = FormBorderStyle.None;
+            LevelForm.Dock = DockStyle.Fill;
+            mainPanel.Controls.Add(LevelForm);
+            mainPanel.Tag = LevelForm;
+            LevelForm.BringToFront();
+            LevelForm.Show();
+        }
+        
+        private void StartScreen()
+        {
+            mainPanel = new Panel();
+            mainPanel.Size = this.ClientSize;
+            mainPanel.Location = new System.Drawing.Point(0, 0);
+            mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            mainPanel.BackColor = Color.Transparent;
+            this.Controls.Add(mainPanel);
+
             // Etykieta do wyœwietlania informacji
             infoLabel = new Label();
             infoLabel.Size = new System.Drawing.Size(500, 200);
@@ -35,7 +63,7 @@ namespace CyberguardGame
             infoLabel.Font = new System.Drawing.Font("Arial", 12);
             infoLabel.Visible = false;
             infoLabel.Anchor = AnchorStyles.None;
-            this.Controls.Add(infoLabel);
+            mainPanel.Controls.Add(infoLabel);
 
             // Przycisk Powrót
             btnBack = new Button();
@@ -45,7 +73,7 @@ namespace CyberguardGame
             btnBack.Click += new EventHandler(BtnBack_Click);
             btnBack.Visible = false;
             btnBack.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.Controls.Add(btnBack);
+            mainPanel.Controls.Add(btnBack);
 
             // Przycisk Powrót 2
             btnBack_2 = new Button();
@@ -55,7 +83,7 @@ namespace CyberguardGame
             btnBack_2.Click += new EventHandler(BtnBack_Click_2);
             btnBack_2.Visible = false;
             btnBack_2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.Controls.Add(btnBack_2);
+            mainPanel.Controls.Add(btnBack_2);
 
             // Przycisk Poziom 1
             btnLevel1 = new Button();
@@ -64,7 +92,7 @@ namespace CyberguardGame
             btnLevel1.Location = new System.Drawing.Point(439, 385);
             btnLevel1.Click += new EventHandler(BtnLevel1_Click);
             btnLevel1.Visible = false;
-            this.Controls.Add(btnLevel1);
+            mainPanel.Controls.Add(btnLevel1);
 
             // Przycisk Poziom 2
             btnLevel2 = new Button();
@@ -74,7 +102,7 @@ namespace CyberguardGame
             btnLevel2.Click += new EventHandler(BtnLevel2_Click);
             btnLevel2.Visible = false;
             btnLevel2.Enabled = false; // Zablokowany domyœlnie
-            this.Controls.Add(btnLevel2);
+            mainPanel.Controls.Add(btnLevel2);
 
             // Przycisk Poziom 3
             btnLevel3 = new Button();
@@ -84,7 +112,7 @@ namespace CyberguardGame
             btnLevel3.Click += new EventHandler(BtnLevel3_Click);
             btnLevel3.Visible = false;
             btnLevel3.Enabled = false; // Zablokowany domyœlnie
-            this.Controls.Add(btnLevel3);
+            mainPanel.Controls.Add(btnLevel3);
 
             // Przycisk Powrotu do Menu G³ównego
             btnReturnToMainMenu = new Button();
@@ -94,7 +122,7 @@ namespace CyberguardGame
             btnReturnToMainMenu.Click += new EventHandler(BtnReturnToMainMenu_Click);
             btnReturnToMainMenu.Visible = false;
             btnReturnToMainMenu.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.Controls.Add(btnReturnToMainMenu);
+            mainPanel.Controls.Add(btnReturnToMainMenu);
         }
 
         private void BtnStart_Click(object sender, EventArgs e)
@@ -117,9 +145,7 @@ namespace CyberguardGame
 
         private void BtnLevel1_Click(object sender, EventArgs e)
         {
-            infoLabel.Text = "Rozpoczêto Poziom 1!";
-            ShowInfoScreen();
-            level1Completed = true; // Symulujemy ukoñczenie poziomu
+            OpenLevel(new Level_1(), sender);
             btnLevel2.Enabled = true; // Odblokowanie poziomu 2
         }
 
@@ -145,6 +171,11 @@ namespace CyberguardGame
 
         private void BtnControls_Click(object sender, EventArgs e)
         {
+            Panel bannerPanel = new Panel();
+            bannerPanel.Size = new System.Drawing.Size(500, 200);
+            bannerPanel.Location = new System.Drawing.Point((this.ClientSize.Width - infoLabel.Width) / 2, (this.ClientSize.Height - infoLabel.Height) / 2);
+            //bannerPanel.Anchor
+            
             string controls = "STEROWANIE:\n" +
                               "W - ruch w górê\n" +
                               "A - ruch w lewo\n" +
@@ -231,5 +262,27 @@ namespace CyberguardGame
             BtnControls.Visible = true;
             BtnRules.Visible = true;
         }
+
+        public void ShowMainPanel()
+        {
+            mainPanel.Visible = true;
+
+            foreach (Control control in mainPanel.Controls)
+            {
+                if (control is Button button &&
+                    (button == BtnStart || button == BtnControls || button == BtnRules))
+                {
+                    button.Visible = true;
+                }
+            }
+
+            if (activeLevel != null)
+            {
+                mainPanel.Controls.Remove(activeLevel);
+                activeLevel.Close();
+                activeLevel = null;
+            }
+        }
+
     }
 }
