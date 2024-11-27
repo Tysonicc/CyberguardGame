@@ -171,11 +171,6 @@ namespace CyberguardGame
 
         private void BtnControls_Click(object sender, EventArgs e)
         {
-            Panel bannerPanel = new Panel();
-            bannerPanel.Size = new System.Drawing.Size(500, 200);
-            bannerPanel.Location = new System.Drawing.Point((this.ClientSize.Width - infoLabel.Width) / 2, (this.ClientSize.Height - infoLabel.Height) / 2);
-            //bannerPanel.Anchor
-            
             string controls = "STEROWANIE:\n" +
                               "W - ruch w górê\n" +
                               "A - ruch w lewo\n" +
