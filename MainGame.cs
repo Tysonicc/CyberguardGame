@@ -73,6 +73,13 @@ namespace CyberguardGame
             btnBack.Click += new EventHandler(BtnBack_Click);
             btnBack.Visible = false;
             btnBack.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnBack.BackColor = SystemColors.WindowFrame;
+            btnBack.FlatAppearance.BorderColor = Color.Black;
+            btnBack.FlatAppearance.BorderSize = 1;
+            btnBack.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnBack.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack);
 
             // Przycisk Powrót 2
@@ -83,6 +90,13 @@ namespace CyberguardGame
             btnBack_2.Click += new EventHandler(BtnBack_Click_2);
             btnBack_2.Visible = false;
             btnBack_2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnBack_2.BackColor = SystemColors.WindowFrame;
+            btnBack_2.FlatAppearance.BorderColor = Color.Black;
+            btnBack_2.FlatAppearance.BorderSize = 1;
+            btnBack_2.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnBack_2.FlatStyle = FlatStyle.Flat;
+            btnBack_2.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnBack_2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack_2);
 
             // Przycisk Poziom 1
@@ -92,6 +106,13 @@ namespace CyberguardGame
             btnLevel1.Location = new System.Drawing.Point(439, 385);
             btnLevel1.Click += new EventHandler(BtnLevel1_Click);
             btnLevel1.Visible = false;
+            btnLevel1.BackColor = SystemColors.WindowFrame;
+            btnLevel1.FlatAppearance.BorderColor = Color.Black;
+            btnLevel1.FlatAppearance.BorderSize = 1;
+            btnLevel1.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnLevel1.FlatStyle = FlatStyle.Flat;
+            btnLevel1.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnLevel1.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel1);
 
             // Przycisk Poziom 2
@@ -102,6 +123,13 @@ namespace CyberguardGame
             btnLevel2.Click += new EventHandler(BtnLevel2_Click);
             btnLevel2.Visible = false;
             btnLevel2.Enabled = false; // Zablokowany domyœlnie
+            btnLevel2.BackColor = SystemColors.WindowFrame;
+            btnLevel2.FlatAppearance.BorderColor = Color.Black;
+            btnLevel2.FlatAppearance.BorderSize = 1;
+            btnLevel2.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnLevel2.FlatStyle = FlatStyle.Flat;
+            btnLevel2.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnLevel2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel2);
 
             // Przycisk Poziom 3
@@ -112,6 +140,13 @@ namespace CyberguardGame
             btnLevel3.Click += new EventHandler(BtnLevel3_Click);
             btnLevel3.Visible = false;
             btnLevel3.Enabled = false; // Zablokowany domyœlnie
+            btnLevel3.BackColor = SystemColors.WindowFrame;
+            btnLevel3.FlatAppearance.BorderColor = Color.Black;
+            btnLevel3.FlatAppearance.BorderSize = 1;
+            btnLevel3.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnLevel3.FlatStyle = FlatStyle.Flat;
+            btnLevel3.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnLevel3.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel3);
 
             // Przycisk Powrotu do Menu G³ównego
@@ -122,6 +157,13 @@ namespace CyberguardGame
             btnReturnToMainMenu.Click += new EventHandler(BtnReturnToMainMenu_Click);
             btnReturnToMainMenu.Visible = false;
             btnReturnToMainMenu.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnReturnToMainMenu.BackColor = SystemColors.WindowFrame;
+            btnReturnToMainMenu.FlatAppearance.BorderColor = Color.Black;
+            btnReturnToMainMenu.FlatAppearance.BorderSize = 1;
+            btnReturnToMainMenu.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            btnReturnToMainMenu.FlatStyle = FlatStyle.Flat;
+            btnReturnToMainMenu.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnReturnToMainMenu.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnReturnToMainMenu);
         }
 
@@ -172,11 +214,12 @@ namespace CyberguardGame
         private void BtnControls_Click(object sender, EventArgs e)
         {
             string controls = "STEROWANIE:\n" +
-                              "W - ruch w górê\n" +
-                              "A - ruch w lewo\n" +
-                              "S - ruch w dó³\n" +
-                              "D - ruch w prawo\n\n" +
-                              "Lewy przycisk myszy - klikanie na elementy";
+                              "W - RUCH W GÓRÊ\n" +
+                              "A - RUCH W LEWO\n" +
+                              "S - RUCH W DÓ£\n" +
+                              "D - RUCH W PRAWO\n" +
+                              "LPM - LEWY PRZYCISK MYSZY";
+
             infoLabel.Text = controls;
             ShowInfoScreen_2();
         }
@@ -203,9 +246,20 @@ namespace CyberguardGame
         }
         private void ShowInfoScreen_2()
         {
+            // Ustawienie widocznoœci etykiety oraz przycisku powrotu
             infoLabel.Visible = true;
             btnBack_2.Visible = true;
 
+            // Ustawienie t³a i ramki dla infoLabel
+            infoLabel.BackColor = Color.Black;  // Ustawienie bia³ego t³a
+            infoLabel.BorderStyle = BorderStyle.FixedSingle;  // Dodanie ramki
+            infoLabel.Padding = new Padding(10);  // Ustawienie marginesów wewnêtrznych, aby tekst nie dotyka³ krawêdzi
+            infoLabel.BackColor = SystemColors.WindowFrame;
+            infoLabel.FlatStyle = FlatStyle.Flat;
+            infoLabel.Font = new System.Drawing.Font("Snap ITC", 16);
+            infoLabel.ForeColor = SystemColors.HighlightText;
+
+            // Ukrywanie innych przycisków
             foreach (Control control in this.Controls)
             {
                 if (control is Button && control != btnBack_2)
@@ -214,6 +268,7 @@ namespace CyberguardGame
                 }
             }
         }
+
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
