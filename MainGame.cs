@@ -44,6 +44,8 @@ namespace CyberguardGame
             mainPanel.Tag = LevelForm;
             LevelForm.BringToFront();
             LevelForm.Show();
+
+            LevelForm.Focus();
         }
         
         private void StartScreen()
@@ -333,6 +335,5 @@ namespace CyberguardGame
                 activeLevel = null;
             }
         }
-
     }
 }
