@@ -1,45 +1,42 @@
-﻿using System;
-using System.Windows.Forms; // Dodajemy przestrzeń nazw dla obsługi klawiszy
+﻿using CyberguardGame;
 
-namespace MazeGame
+public class Player
 {
-    public class Player
-    {
-        public int X { get; set; } // Pozycja gracza na osi X
-        public int Y { get; set; } // Pozycja gracza na osi Y
+    public int X { get; private set; }
+    public int Y { get; private set; }
 
-        // Konstruktor klasy gracza, przyjmuje początkowe pozycje X i Y
-        public Player(int x, int y)
+    public Player(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public void Move(Keys key, Maze maze)
+    {
+        int newX = X;
+        int newY = Y;
+
+        switch (key)
         {
-            X = x;
-            Y = y;
+            case Keys.W:
+                newY--; // Ruch w górę
+                break;
+            case Keys.A:
+                newX--; // Ruch w lewo
+                break;
+            case Keys.S:
+                newY++; // Ruch w dół
+                break;
+            case Keys.D:
+                newX++; // Ruch w prawo
+                break;
         }
 
-        // Metoda do poruszania graczem w zależności od naciśniętego klawisza
-        public void Move(Keys key, int maxX, int maxY)
+        // Sprawdzenie granic oraz czy nowa pozycja nie jest ścianą
+        if (newX >= 0 && newX < maze.Width && newY >= 0 && newY < maze.Height && maze.Grid[newY, newX] != 1)
         {
-            switch (key)
-            {
-                // Poruszanie w górę, jeśli Y jest większe od 0
-                case Keys.W:
-                    if (Y > 0) Y--;
-                    break;
-
-                // Poruszanie w dół, jeśli Y jest mniejsze od maksymalnej wysokości
-                case Keys.S:
-                    if (Y < maxY - 1) Y++;
-                    break;
-
-                // Poruszanie w lewo, jeśli X jest większe od 0
-                case Keys.A:
-                    if (X > 0) X--;
-                    break;
-
-                // Poruszanie w prawo, jeśli X jest mniejsze od maksymalnej szerokości
-                case Keys.D:
-                    if (X < maxX - 1) X++;
-                    break;
-            }
+            X = newX;
+            Y = newY;
         }
     }
 }
