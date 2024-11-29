@@ -6,29 +6,68 @@ namespace CyberguardGame
 {
     public partial class Level_1 : Form
     {
-        private Button btnBack;
-        private Panel optionsPanel;   // Panel z kontrolkami do zaznaczania
-        private Panel scorePanel;     // Panel z punktami
-        private CheckBox checkBox1, checkBox2, checkBox3;
-        private Label panelTitle, scoreLabel;
-        private int totalPoints = 0;  // Zmienna przechowująca punkty
-        private System.Windows.Forms.Timer inactivityTimer;      // Timer do monitorowania aktywności
-        private System.Windows.Forms.Timer windowsDefenderTimer; // Timer dla WINDOWS DEFENDER
-        private int inactivityCounter = 0;                       // Licznik bezczynności w sekundach
+        private Button btnBack; // Przycisk "KONIEC"
+        private Panel optionsPanel;   // Panel z kontrolkami
+        private Panel scorePanel, timePanel; // Panele z punktami i czasem
+        private Label scoreLabel, timerLabel;
+        private Maze maze;            // Obiekt labiryntu
+        private Player player;        // Obiekt gracza
+        private const int cellWidth = 40; // Szerokość komórki w pikselach
+        private const int cellHeight = 40; // Wysokość komórki w pikselach
+        private Panel mazePanel;      // Panel do wyświetlania labiryntu
+        private int totalPoints = 0;  // Zmienna do przechowywania punktów
+
+        private System.Windows.Forms.Timer gameTimer;      // Timer do liczenia czasu
+        private int elapsedTime = 0;  // Licznik czasu w sekundach
+
+        // Flagi dla checkboxów
         private bool checkBox1Checked = false;
         private bool checkBox2Checked = false;
         private bool checkBox3Checked = false;
-        private bool windowsDefenderActivated = false;
+
+        // Kontrolki dla panelu
+        private CheckBox checkBox1, checkBox2, checkBox3;
+        private Label panelTitle;
 
         public Level_1()
         {
             InitializeComponent();
-            LevelScreen();
-            InitializeTimers();
+            InitializeGame();
+            InitializeTimer(); // Inicjalizacja timera
         }
 
-        private void LevelScreen()
+        private void InitializeGame()
         {
+            // Tworzenie labiryntu z poziomu łatwego
+            maze = new Maze(MazeLevel.Easy.Width, MazeLevel.Easy.Height);
+            maze.GenerateMaze(MazeLevel.Easy.Grid, MazeLevel.Easy.EndPoint);
+
+            // Ustawienie gracza w punkcie startowym
+            player = new Player(MazeLevel.Easy.StartPoint.X, MazeLevel.Easy.StartPoint.Y);
+
+            // Tworzenie panelu do wyświetlania labiryntu
+            mazePanel = new Panel();
+            mazePanel.Size = new Size(
+                MazeLevel.Easy.Width * cellWidth + 20,  // +20 dla marginesów
+                MazeLevel.Easy.Height * cellHeight + 20 // +20 dla marginesów
+            );
+            mazePanel.Location = new Point(
+                (this.ClientSize.Width - mazePanel.Width) / 2,
+                (this.ClientSize.Height - mazePanel.Height) / 2
+            );
+            mazePanel.BackColor = Color.LightSteelBlue; // Kolor przypominający Windows XP
+            mazePanel.BorderStyle = BorderStyle.Fixed3D; // Obwódka 3D
+            mazePanel.Padding = new Padding(10); // Dodanie wewnętrznych marginesów
+
+            this.Controls.Add(mazePanel); // Dodawanie panelu do kontrolek formularza
+
+            // Ustawienie obsługi zdarzenia Paint dla panelu labiryntu
+            mazePanel.Paint += new PaintEventHandler(MazePanel_Paint);
+
+            // Ustawienie obsługi zdarzenia KeyDown dla formularza
+            this.KeyDown += new KeyEventHandler(Level_1_KeyDown);
+            this.KeyPreview = true; // Umożliwia formularzowi odbieranie zdarzeń klawiatury przed kontrolkami
+
             // Przyciski powrotu
             btnBack = new Button();
             btnBack.Text = "KONIEC";
@@ -45,6 +84,120 @@ namespace CyberguardGame
             btnBack.ForeColor = SystemColors.HighlightText;
             this.Controls.Add(btnBack);
 
+            // Panel z licznikiem punktów
+            scorePanel = new Panel();
+            scorePanel.Size = new System.Drawing.Size(200, 50);
+            scorePanel.Location = new System.Drawing.Point(this.ClientSize.Width - scorePanel.Width - 20, 20);
+            scorePanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            scorePanel.BackColor = SystemColors.WindowFrame;
+            scorePanel.BorderStyle = BorderStyle.FixedSingle;
+            scorePanel.Padding = new Padding(10);
+            this.Controls.Add(scorePanel);
+
+            // Etykieta do wyświetlania punktów
+            scoreLabel = new Label();
+            scoreLabel.Text = "PUNKTY: " + totalPoints;
+            scoreLabel.Location = new System.Drawing.Point(10, 10);
+            scoreLabel.AutoSize = true;
+            scoreLabel.Font = new Font("Snap ITC", 11);
+            scoreLabel.ForeColor = SystemColors.HighlightText;
+            scorePanel.Controls.Add(scoreLabel);
+
+            // Panel z licznikiem czasu
+            timePanel = new Panel();
+            timePanel.Size = new System.Drawing.Size(200, 50);
+            timePanel.Location = new System.Drawing.Point(this.ClientSize.Width - timePanel.Width - 20, 80);
+            timePanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            timePanel.BackColor = SystemColors.WindowFrame;
+            timePanel.BorderStyle = BorderStyle.FixedSingle;
+            timePanel.Padding = new Padding(10);
+            this.Controls.Add(timePanel);
+
+            // Etykieta do wyświetlania czasu
+            timerLabel = new Label();
+            timerLabel.Text = "CZAS: 0 s";
+            timerLabel.Location = new System.Drawing.Point(10, 10);
+            timerLabel.AutoSize = true;
+            timerLabel.Font = new Font("Snap ITC", 11);
+            timerLabel.ForeColor = SystemColors.HighlightText;
+            timePanel.Controls.Add(timerLabel);
+        }
+
+        private void InitializeTimer()
+        {
+            gameTimer = new System.Windows.Forms.Timer();
+            gameTimer.Interval = 1000; // Interwał 1 sekunda
+            gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Start(); // Start licznika czasu
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            elapsedTime++; // Zwiększanie czasu o 1 sekundę
+            timerLabel.Text = "CZAS: " + elapsedTime + " s"; // Aktualizacja etykiety
+        }
+
+        private void MazePanel_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Rysowanie labiryntu z uwzględnieniem marginesów
+            int margin = 10; // Margines wewnętrzny
+            for (int y = 0; y < maze.Height; y++)
+            {
+                for (int x = 0; x < maze.Width; x++)
+                {
+                    if (maze.Grid[y, x] == 1) // Ściana
+                    {
+                        g.FillRectangle(
+                            Brushes.Black,
+                            x * cellWidth + margin,
+                            y * cellHeight + margin,
+                            cellWidth,
+                            cellHeight
+                        );
+                    }
+                    else if (x == maze.EndPoint.X && y == maze.EndPoint.Y) // Punkt końcowy
+                    {
+                        g.FillRectangle(
+                            Brushes.Red,
+                            x * cellWidth + margin,
+                            y * cellHeight + margin,
+                            cellWidth,
+                            cellHeight
+                        );
+                    }
+                }
+            }
+
+            // Rysowanie gracza
+            g.FillRectangle(
+                Brushes.Blue,
+                player.X * cellWidth + margin,
+                player.Y * cellHeight + margin,
+                cellWidth,
+                cellHeight
+            );
+        }
+
+        private void Level_1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Ruch gracza
+            player.Move(e.KeyCode, maze); // Przekazanie obiektu maze
+            mazePanel.Invalidate(); // Odświeżenie panelu
+
+            // Sprawdzenie, czy gracz osiągnął punkt końcowy
+            if (player.X == maze.EndPoint.X && player.Y == maze.EndPoint.Y)
+            {
+                totalPoints += 100; // Dodanie 100 punktów
+                scoreLabel.Text = "PUNKTY: " + totalPoints; // Aktualizacja etykiety punktów
+                mazePanel.Visible = false; // Ukrycie panelu labiryntu
+                ShowOptionsPanel(); // Wyświetlenie panelu z kontrolkami
+            }
+        }
+
+        private void ShowOptionsPanel()
+        {
             // Panel z kontrolkami - lewy górny róg
             optionsPanel = new Panel();
             optionsPanel.Size = new System.Drawing.Size(200, 150);
@@ -97,44 +250,6 @@ namespace CyberguardGame
 
             // Dodanie panelu z kontrolkami do formularza
             this.Controls.Add(optionsPanel);
-
-            // Panel z licznikiem punktów
-            scorePanel = new Panel();
-            scorePanel.Size = new System.Drawing.Size(200, 50);
-            scorePanel.Location = new System.Drawing.Point(this.ClientSize.Width - scorePanel.Width - 20, 20);
-            scorePanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            scorePanel.BackColor = SystemColors.WindowFrame;
-            scorePanel.BorderStyle = BorderStyle.FixedSingle;
-            scorePanel.Padding = new Padding(10);
-            scorePanel.MouseMove += new MouseEventHandler(ResetInactivityCounter);
-
-            // Etykieta do wyświetlania punktów
-            scoreLabel = new Label();
-            scoreLabel.Text = "PUNKTY: " + totalPoints;
-            scoreLabel.Location = new System.Drawing.Point(10, 10);
-            scoreLabel.AutoSize = true;
-            scoreLabel.Font = new Font("Snap ITC", 11);
-            scoreLabel.ForeColor = SystemColors.HighlightText;
-
-            // Dodanie etykiety do panelu punktów
-            scorePanel.Controls.Add(scoreLabel);
-
-            // Dodanie panelu punktów do formularza
-            this.Controls.Add(scorePanel);
-        }
-
-        private void InitializeTimers()
-        {
-            // Timer dla monitorowania bezczynności
-            inactivityTimer = new System.Windows.Forms.Timer();
-            inactivityTimer.Interval = 2000; // Co 2 sekundy
-            inactivityTimer.Tick += new EventHandler(InactivityTimer_Tick);
-            inactivityTimer.Start();
-
-            // Timer dla WINDOWS DEFENDER
-            windowsDefenderTimer = new System.Windows.Forms.Timer();
-            windowsDefenderTimer.Interval = 15000; // 15 sekund
-            windowsDefenderTimer.Tick += new EventHandler(WindowsDefenderTimer_Tick);
         }
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
@@ -144,59 +259,20 @@ namespace CyberguardGame
             {
                 checkBox1Checked = true; // Ustawiamy flagę na true, żeby nie dawać ponownie punktów
                 totalPoints += 100;
-                windowsDefenderActivated = true;
-                windowsDefenderTimer.Start(); // Startujemy timer dla WINDOWS DEFENDER
+                scoreLabel.Text = "PUNKTY: " + totalPoints; // Zaktualizowanie punktów
             }
             else if (sender == checkBox2 && !checkBox2Checked)
             {
                 checkBox2Checked = true;
                 totalPoints += 100;
+                scoreLabel.Text = "PUNKTY: " + totalPoints;
             }
             else if (sender == checkBox3 && !checkBox3Checked)
             {
                 checkBox3Checked = true;
                 totalPoints += 100;
+                scoreLabel.Text = "PUNKTY: " + totalPoints;
             }
-
-            // Zaktualizowanie punktów w etykiecie
-            scoreLabel.Text = "PUNKTY: " + totalPoints;
-
-            // Resetowanie licznika bezczynności, jeśli którakolwiek kontrolka została zaznaczona
-            ResetInactivityCounter(null, null);
-        }
-
-        private void InactivityTimer_Tick(object sender, EventArgs e)
-        {
-            // Sprawdzamy, czy którakolwiek kontrolka nie jest zaznaczona
-            if (!checkBox1.Checked || !checkBox2.Checked || !checkBox3.Checked)
-            {
-                inactivityCounter += 2; // Liczymy 2 sekundy co 2 sekundy
-
-                if (inactivityCounter >= 10) // Po 10 sekundach bezczynności
-                {
-                    totalPoints -= 5;  // Odejmowanie punktów co 2 sekundy
-                    scoreLabel.Text = "PUNKTY: " + totalPoints;
-                }
-            }
-        }
-
-        private void WindowsDefenderTimer_Tick(object sender, EventArgs e)
-        {
-            // Kontrolka "WINDOWS DEFENDER" ma się wyłączyć po 15 sekundach
-            checkBox1.Checked = false;
-            windowsDefenderActivated = false;
-            MessageBox.Show("Kontrolka WINDOWS DEFENDER została wyłączona.", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Zatrzymanie timera
-            windowsDefenderTimer.Stop();
-
-            // Startujemy nowy timer dla bezczynności po wyłączeniu kontrolki
-            inactivityTimer.Start();
-        }
-
-        private void ResetInactivityCounter(object sender, EventArgs e)
-        {
-            inactivityCounter = 0; // Resetowanie licznika bezczynności
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -207,6 +283,11 @@ namespace CyberguardGame
             {
                 this.Close();
             }
+        }
+
+        private void ResetInactivityCounter(object sender, EventArgs e)
+        {
+            // Resetowanie licznika bezczynności
         }
     }
 }
