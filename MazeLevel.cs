@@ -7,7 +7,6 @@ public class MazeLevel
     public int Width => Grid.GetLength(1);                          // Liczba kolumn
     public int Height => Grid.GetLength(0);                         // Liczba wierszy
 
-    // Konstruktor klasy
     public MazeLevel(int[,] grid, (int X, int Y) startPoint, (int X, int Y) endPoint)
     {
         Grid = grid;

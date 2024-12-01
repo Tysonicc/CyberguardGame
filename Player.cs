@@ -18,20 +18,19 @@ public class Player
         switch (key)
         {
             case Keys.W:
-                newY--;             // Ruch w górę
+                newY--;
                 break;
             case Keys.A:
-                newX--;             // Ruch w lewo
+                newX--;
                 break;
             case Keys.S:
-                newY++;             // Ruch w dół
+                newY++;
                 break;
             case Keys.D:
-                newX++;             // Ruch w prawo
+                newX++;
                 break;
         }
 
-        // Sprawdzenie granic oraz czy nowa pozycja nie jest ścianą
         if (newX >= 0 && newX < maze.Width && newY >= 0 && newY < maze.Height && maze.Grid[newY, newX] != 1)
         {
             X = newX;
