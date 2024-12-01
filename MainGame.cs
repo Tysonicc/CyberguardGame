@@ -59,7 +59,6 @@ namespace CyberguardGame{
             mainPanel.BackColor = Color.Transparent;
             this.Controls.Add(mainPanel);
 
-            // Etykieta do wyœwietlania informacji
             infoLabel = new Label();
             infoLabel.Size = new System.Drawing.Size(500, 200);
             infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -69,7 +68,6 @@ namespace CyberguardGame{
             infoLabel.Anchor = AnchorStyles.None;
             mainPanel.Controls.Add(infoLabel);
 
-            // Przycisk Powrót
             btnBack = new Button();
             btnBack.Text = "POWRÓT";
             btnBack.Size = new System.Drawing.Size(100, 50);
@@ -86,7 +84,6 @@ namespace CyberguardGame{
             btnBack.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack);
 
-            // Przycisk Powrót 2
             btnBack_2 = new Button();
             btnBack_2.Text = "POWRÓT";
             btnBack_2.Size = new System.Drawing.Size(100, 50);
@@ -103,7 +100,6 @@ namespace CyberguardGame{
             btnBack_2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack_2);
 
-            // Przycisk Poziom 1
             btnLevel1 = new Button();
             btnLevel1.Text = "POZIOM 1";
             btnLevel1.Size = new System.Drawing.Size(125, 40);
@@ -119,14 +115,13 @@ namespace CyberguardGame{
             btnLevel1.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel1);
 
-            // Przycisk Poziom 2
             btnLevel2 = new Button();
             btnLevel2.Text = "POZIOM 2";
             btnLevel2.Size = new System.Drawing.Size(125, 40);
             btnLevel2.Location = new System.Drawing.Point(439, 435);
             btnLevel2.Click += new EventHandler(BtnLevel2_Click);
             btnLevel2.Visible = false;
-            btnLevel2.Enabled = false; // Zablokowany domyœlnie
+            btnLevel2.Enabled = false;                                          // Zablokowany domyœlnie
             btnLevel2.BackColor = SystemColors.WindowFrame;
             btnLevel2.FlatAppearance.BorderColor = Color.Black;
             btnLevel2.FlatAppearance.BorderSize = 1;
@@ -136,14 +131,13 @@ namespace CyberguardGame{
             btnLevel2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel2);
 
-            // Przycisk Poziom 3
             btnLevel3 = new Button();
             btnLevel3.Text = "POZIOM 3";
             btnLevel3.Size = new System.Drawing.Size(125, 40);
             btnLevel3.Location = new System.Drawing.Point(439, 485);
             btnLevel3.Click += new EventHandler(BtnLevel3_Click);
             btnLevel3.Visible = false;
-            btnLevel3.Enabled = false; // Zablokowany domyœlnie
+            btnLevel3.Enabled = false;                                          // Zablokowany domyœlnie
             btnLevel3.BackColor = SystemColors.WindowFrame;
             btnLevel3.FlatAppearance.BorderColor = Color.Black;
             btnLevel3.FlatAppearance.BorderSize = 1;
@@ -153,7 +147,6 @@ namespace CyberguardGame{
             btnLevel3.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel3);
 
-            // Przycisk Powrotu do Menu G³ównego
             btnReturnToMainMenu = new Button();
             btnReturnToMainMenu.Text = "POWRÓT";
             btnReturnToMainMenu.Size = new System.Drawing.Size(100, 50);
@@ -222,11 +215,11 @@ namespace CyberguardGame{
 
         private void ShowInfoScreen(){
             
-            // Ustawienie widocznoœci etykiety oraz przycisku powrotu
+                                                                        // Ustawienie widocznoœci etykiety oraz przycisku powrotu
             infoLabel.Visible = true;
             btnBack_2.Visible = true;
 
-            // Ustawienie t³a i ramki dla infoLabel
+                                                                        // Ustawienie t³a i ramki dla infoLabel
             infoLabel.BackColor = Color.Black;                          // Ustawienie bia³ego t³a
             infoLabel.BorderStyle = BorderStyle.FixedSingle;            // Dodanie ramki
             infoLabel.Padding = new Padding(10);                        // Ustawienie marginesów wewnêtrznych, aby tekst nie dotyka³ krawêdzi
@@ -235,7 +228,7 @@ namespace CyberguardGame{
             infoLabel.Font = new System.Drawing.Font("Snap ITC", 16);
             infoLabel.ForeColor = SystemColors.HighlightText;
 
-            // Ukrywanie innych przycisków
+                                                                        // Ukrywanie innych przycisków
             foreach (Control control in this.Controls){
                 
                 if (control is Button && control != btnBack_2){
