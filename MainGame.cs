@@ -1,10 +1,10 @@
 using System;
 using System.Windows.Forms;
 
-namespace CyberguardGame{
-
-    public partial class MainGame : Form{
-        
+namespace CyberguardGame
+{
+    public partial class MainGame : Form
+    {
         private Label infoLabel;
         
         private Button btnBack;
@@ -14,14 +14,15 @@ namespace CyberguardGame{
         private Button btnLevel3;
         private Button btnReturnToMainMenu;
 
-        private Panel mainPanel;
+        private System.Windows.Forms.Panel mainPanel;
 
         private bool level1Completed = false;
         private bool level2Completed = false;
 
         private Form activeLevel = new Form();
 
-        public MainGame(){
+        public MainGame()
+        {
             InitializeComponent();
             StartScreen();
 
@@ -29,9 +30,10 @@ namespace CyberguardGame{
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        private void OpenLevel(Form LevelForm, object btnSender){
-            
-            if (activeLevel != null){
+        private void OpenLevel(Form LevelForm, object btnSender)
+        {
+            if (activeLevel != null)
+            {
                 mainPanel.Controls.Remove(activeLevel);
                 activeLevel.Close();
             }
@@ -50,9 +52,9 @@ namespace CyberguardGame{
             LevelForm.Focus();
         }
         
-        private void StartScreen(){
-            
-            mainPanel = new Panel();
+        private void StartScreen()
+        {
+            mainPanel = new System.Windows.Forms.Panel();
             mainPanel.Size = this.ClientSize;
             mainPanel.Location = new System.Drawing.Point(0, 0);
             mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -121,7 +123,7 @@ namespace CyberguardGame{
             btnLevel2.Location = new System.Drawing.Point(439, 435);
             btnLevel2.Click += new EventHandler(BtnLevel2_Click);
             btnLevel2.Visible = false;
-            btnLevel2.Enabled = false;                                          // Zablokowany domyœlnie
+            btnLevel2.Enabled = false;
             btnLevel2.BackColor = SystemColors.WindowFrame;
             btnLevel2.FlatAppearance.BorderColor = Color.Black;
             btnLevel2.FlatAppearance.BorderSize = 1;
@@ -137,7 +139,7 @@ namespace CyberguardGame{
             btnLevel3.Location = new System.Drawing.Point(439, 485);
             btnLevel3.Click += new EventHandler(BtnLevel3_Click);
             btnLevel3.Visible = false;
-            btnLevel3.Enabled = false;                                          // Zablokowany domyœlnie
+            btnLevel3.Enabled = false;
             btnLevel3.BackColor = SystemColors.WindowFrame;
             btnLevel3.FlatAppearance.BorderColor = Color.Black;
             btnLevel3.FlatAppearance.BorderSize = 1;
@@ -164,37 +166,44 @@ namespace CyberguardGame{
             mainPanel.Controls.Add(btnReturnToMainMenu);
         }
 
-        private void BtnStart_Click(object sender, EventArgs e){
-            
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
             btnLevel1.Visible = true;
             btnLevel2.Visible = true;
             btnLevel3.Visible = true;
             btnReturnToMainMenu.Visible = true;
 
-            foreach (Control control in this.Controls){
-                
-                if (control is Button && control != btnLevel1 && control != btnLevel2 && control != btnLevel3 && control != btnReturnToMainMenu){
-                    
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button && control != btnLevel1 && control != btnLevel2 && control != btnLevel3 && control != btnReturnToMainMenu)
+                {
                     control.Visible = false;
                 }
             }
         }
 
-        private void BtnLevel1_Click(object sender, EventArgs e){
-            
-            OpenLevel(new Level_1(), sender);
-            btnLevel2.Enabled = true;
+        private void BtnLevel1_Click(object sender, EventArgs e)
+        {
+            Level_1 level_1 = new Level_1();
+            level_1.FormClosed += (s, args) => {btnLevel2.Enabled = true;};
+            OpenLevel(level_1, sender);
         }
 
-        private void BtnLevel2_Click(object sender, EventArgs e){
-
+        private void BtnLevel2_Click(object sender, EventArgs e)
+        {
+            Level_2 level_2 = new Level_2();
+            level_2.FormClosed += (s, args) => OpenLevel(new Level_3(), sender);
+            OpenLevel(level_2, sender);
         }
 
-        private void BtnLevel3_Click(object sender, EventArgs e){
-            
+        private void BtnLevel3_Click(object sender, EventArgs e)
+        {
+            Level_3 level_3 = new Level_3();
+            OpenLevel(level_3, sender);
         }
 
-        private void BtnControls_Click(object sender, EventArgs e){
+        private void BtnControls_Click(object sender, EventArgs e)
+        {
             string controls = "STEROWANIE:\n" +
                               "W - RUCH W GÓRÊ\n" +
                               "A - RUCH W LEWO\n" +
@@ -206,94 +215,89 @@ namespace CyberguardGame{
             ShowInfoScreen();
         }
 
-        private void BtnRules_Click(object sender, EventArgs e){
-            
+        private void BtnRules_Click(object sender, EventArgs e)
+        {
             string rules = "Wcielasz siê w rolê specjalisty ds. bezpieczeñstwa sieciowego, chroni¹c wirtualne biuro przed zagro¿eniami.";
             infoLabel.Text = rules;
             ShowInfoScreen();
         }
 
-        private void ShowInfoScreen(){
-            
-                                                                        // Ustawienie widocznoœci etykiety oraz przycisku powrotu
+        private void ShowInfoScreen()
+        {
             infoLabel.Visible = true;
             btnBack_2.Visible = true;
-
-                                                                        // Ustawienie t³a i ramki dla infoLabel
-            infoLabel.BackColor = Color.Black;                          // Ustawienie bia³ego t³a
-            infoLabel.BorderStyle = BorderStyle.FixedSingle;            // Dodanie ramki
-            infoLabel.Padding = new Padding(10);                        // Ustawienie marginesów wewnêtrznych, aby tekst nie dotyka³ krawêdzi
+            
+            infoLabel.BackColor = Color.Black;
+            infoLabel.BorderStyle = BorderStyle.FixedSingle;
+            infoLabel.Padding = new Padding(10);
             infoLabel.BackColor = SystemColors.WindowFrame;
             infoLabel.FlatStyle = FlatStyle.Flat;
             infoLabel.Font = new System.Drawing.Font("Snap ITC", 16);
             infoLabel.ForeColor = SystemColors.HighlightText;
 
-                                                                        // Ukrywanie innych przycisków
-            foreach (Control control in this.Controls){
-                
-                if (control is Button && control != btnBack_2){
-                    
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button && control != btnBack_2)
+                {
                     control.Visible = false;
                 }
             }
         }
 
-        private void BtnBack_Click(object sender, EventArgs e){
-
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
             infoLabel.Visible = false;
             btnBack.Visible = false;
 
-            foreach (Control control in this.Controls){
-
-                if (control is Button && (control == btnLevel1 || control == btnLevel2 || control == btnLevel3 || control == btnReturnToMainMenu)){
-
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button && (control == btnLevel1 || control == btnLevel2 || control == btnLevel3 || control == btnReturnToMainMenu))
+                {
                     control.Visible = true;
                 }
             }
         }
 
-        private void BtnBack_Click_2(object sender, EventArgs e){
-
+        private void BtnBack_Click_2(object sender, EventArgs e)
+        {
             infoLabel.Visible = false;
             btnBack_2.Visible = false;
 
-            foreach (Control control in this.Controls){
-
-                if (control is Button && (control == BtnStart || control == BtnControls || control == BtnRules)){
-
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button && (control == BtnStart || control == BtnControls || control == BtnRules))
+                {
                     control.Visible = true;
                 }
             }
         }
 
-        private void BtnReturnToMainMenu_Click(object sender, EventArgs e){
-
-            // Ukrywanie przycisków poziomów trudnoœci i przycisku Powrót do Menu
+        private void BtnReturnToMainMenu_Click(object sender, EventArgs e)
+        {
             btnLevel1.Visible = false;
             btnLevel2.Visible = false;
             btnLevel3.Visible = false;
             btnReturnToMainMenu.Visible = false;
 
-            // Przywracanie przycisków g³ównego menu
             BtnStart.Visible = true;
             BtnControls.Visible = true;
             BtnRules.Visible = true;
         }
 
-        public void ShowMainPanel(){
-
+        public void ShowMainPanel()
+        {
             mainPanel.Visible = true;
 
-            foreach (Control control in mainPanel.Controls){
-
-                if (control is Button button && (button == BtnStart || button == BtnControls || button == BtnRules)){
-
+            foreach (Control control in mainPanel.Controls)
+            {
+                if (control is Button button && (button == BtnStart || button == BtnControls || button == BtnRules))
+                {
                     button.Visible = true;
                 }
             }
 
-            if (activeLevel != null){
-
+            if (activeLevel != null)
+            {
                 mainPanel.Controls.Remove(activeLevel);
                 activeLevel.Close();
                 activeLevel = null;
