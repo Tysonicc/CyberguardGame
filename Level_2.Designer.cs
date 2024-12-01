@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Level_2";
+            SuspendLayout();
+            // 
+            // Level_2
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.Windows_XP_wallpaper;
+            ClientSize = new Size(1008, 681);
+            Name = "Level_2";
+            Text = "CYBERGUARDGAME - LEVEL 2 (MEDIUM)";
+            ResumeLayout(false);
         }
 
         #endregion
