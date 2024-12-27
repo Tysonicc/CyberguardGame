@@ -5,62 +5,63 @@ namespace CyberguardGame
 {
     public partial class MainGame : Form
     {
-        private Label infoLabel;
-        
-        private Button btnBack;
-        private Button btnBack_2;
-        private Button btnLevel1;
-        private Button btnLevel2;
-        private Button btnLevel3;
-        private Button btnReturnToMainMenu;
+        private Label infoLabel;                                                                    // Etykieta do wyœwietlania informacji
 
-        private System.Windows.Forms.Panel mainPanel;
+        private Button btnBack, btnBack_2, btnLevel1, btnLevel2, btnLevel3, btnReturnToMainMenu;    // Przyciski powrotu, przyciski poziomów trudnoœci
 
-        private bool level1Completed = false;
-        private bool level2Completed = false;
+        private Panel mainPanel;                                                                    // G³ówny panel 
 
-        private Form activeLevel = new Form();
+        private bool level1Completed = false;                                                       // Flaga do œledzenia ukoñczenia poziomu 1
+        private bool level2Completed = false;                                                       // Flaga do œledzenia ukoñczenia poziomu 2
+
+        private Form activeLevel = new Form();                                                      // Aktywny poziom
 
         public MainGame()
         {
-            InitializeComponent();
-            StartScreen();
+            InitializeComponent();                                                                  // Inicjalizacja komponentów
+            StartScreen();                                                                          // Wywo³anie metody do wyœwietlania ekranu g³ównego
 
+            //Ustawienie t³a formularzu
             this.BackgroundImage = Properties.Resources.JEMA_GER_1426_24_v1;
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
+        //Metoda, która otwiera dany poziom
         private void OpenLevel(Form LevelForm, object btnSender)
         {
+            // Sprawdzenie, czy aktywny poziom istnieje i zamkniêcie go
             if (activeLevel != null)
             {
                 mainPanel.Controls.Remove(activeLevel);
                 activeLevel.Close();
             }
 
-            activeLevel = LevelForm;
+            activeLevel = LevelForm;                                                                // Ustawienie nowego poziomu jako aktywnego
             
-            LevelForm.TopLevel = false;
-            LevelForm.FormBorderStyle = FormBorderStyle.None;
-            LevelForm.Dock = DockStyle.Fill;
+            LevelForm.TopLevel = false;                                                             // Ustawienie danego poziomu jako podrzêdnego
+            LevelForm.FormBorderStyle = FormBorderStyle.None;                                       // Usuniêcie ramki
+            LevelForm.Dock = DockStyle.Fill;                                                        // Wype³nienie panelu
             
-            mainPanel.Controls.Add(LevelForm);
-            mainPanel.Tag = LevelForm;
+            mainPanel.Controls.Add(LevelForm);                                                      // Dodanie poziomu do panelu
+            mainPanel.Tag = LevelForm;                                                              // Ustawienie tagu panelu
             
-            LevelForm.BringToFront();
-            LevelForm.Show();
-            LevelForm.Focus();
+            LevelForm.BringToFront();                                                               // Przeniesienie poziomu na wierzch
+            LevelForm.Show();                                                                       // Wyœwietlenie danego poziomu 
+            LevelForm.Focus();                                                                      // Ustawienie fokusu na danym poziomie
         }
         
+        // Metoda, która s³u¿y do wyœwietlania ekranu startowego z danymi przyciskami w danym stylu 
         private void StartScreen()
         {
-            mainPanel = new System.Windows.Forms.Panel();
+            // Dodanie i wystylizowanie panelu do formularza
+            mainPanel = new Panel();
             mainPanel.Size = this.ClientSize;
             mainPanel.Location = new System.Drawing.Point(0, 0);
             mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             mainPanel.BackColor = Color.Transparent;
             this.Controls.Add(mainPanel);
 
+            // Dodanie i wystylizowanie etykiety potrzebnej do wyœwietlania informacji
             infoLabel = new Label();
             infoLabel.Size = new System.Drawing.Size(500, 200);
             infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -70,6 +71,7 @@ namespace CyberguardGame
             infoLabel.Anchor = AnchorStyles.None;
             mainPanel.Controls.Add(infoLabel);
 
+            // Dodanie i wystylizowanie przycisku powrotu
             btnBack = new Button();
             btnBack.Text = "POWRÓT";
             btnBack.Size = new System.Drawing.Size(100, 50);
@@ -82,10 +84,11 @@ namespace CyberguardGame
             btnBack.FlatAppearance.BorderSize = 1;
             btnBack.FlatAppearance.MouseOverBackColor = Color.DarkGray;
             btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnBack.Font = new System.Drawing.Font("Snap ITC", 10);
             btnBack.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack);
 
+            // Dodanie i wystylizowanie drugiego przycisku powortu
             btnBack_2 = new Button();
             btnBack_2.Text = "POWRÓT";
             btnBack_2.Size = new System.Drawing.Size(100, 50);
@@ -98,10 +101,11 @@ namespace CyberguardGame
             btnBack_2.FlatAppearance.BorderSize = 1;
             btnBack_2.FlatAppearance.MouseOverBackColor = Color.DarkGray;
             btnBack_2.FlatStyle = FlatStyle.Flat;
-            btnBack_2.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnBack_2.Font = new System.Drawing.Font("Snap ITC", 10);
             btnBack_2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnBack_2);
 
+            // Dodanie i wystylizowanie przycisku poziomu 1
             btnLevel1 = new Button();
             btnLevel1.Text = "POZIOM 1";
             btnLevel1.Size = new System.Drawing.Size(125, 40);
@@ -117,6 +121,7 @@ namespace CyberguardGame
             btnLevel1.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel1);
 
+            // Dodanie i wystylizowanie przycisku poziomu 2
             btnLevel2 = new Button();
             btnLevel2.Text = "POZIOM 2";
             btnLevel2.Size = new System.Drawing.Size(125, 40);
@@ -133,6 +138,7 @@ namespace CyberguardGame
             btnLevel2.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel2);
 
+            // Dodanie i wystylizowanie przycisku poziomu 3
             btnLevel3 = new Button();
             btnLevel3.Text = "POZIOM 3";
             btnLevel3.Size = new System.Drawing.Size(125, 40);
@@ -149,6 +155,7 @@ namespace CyberguardGame
             btnLevel3.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnLevel3);
 
+            // Dodanie i wystylizowanie przycisku powrotu do g³ównego menu
             btnReturnToMainMenu = new Button();
             btnReturnToMainMenu.Text = "POWRÓT";
             btnReturnToMainMenu.Size = new System.Drawing.Size(100, 50);
@@ -161,49 +168,57 @@ namespace CyberguardGame
             btnReturnToMainMenu.FlatAppearance.BorderSize = 1;
             btnReturnToMainMenu.FlatAppearance.MouseOverBackColor = Color.DarkGray;
             btnReturnToMainMenu.FlatStyle = FlatStyle.Flat;
-            btnReturnToMainMenu.Font = new System.Drawing.Font("Snap ITC", 11);
+            btnReturnToMainMenu.Font = new System.Drawing.Font("Snap ITC", 10);
             btnReturnToMainMenu.ForeColor = SystemColors.HighlightText;
             mainPanel.Controls.Add(btnReturnToMainMenu);
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku startu
         private void BtnStart_Click(object sender, EventArgs e)
         {
+            // Wyœwietlenie przycisków z poziomami i przycisku powrotu do g³ównego menu
             btnLevel1.Visible = true;
             btnLevel2.Visible = true;
             btnLevel3.Visible = true;
             btnReturnToMainMenu.Visible = true;
 
+            // Ukrycie innych przycisków
             foreach (Control control in this.Controls)
             {
                 if (control is Button && control != btnLevel1 && control != btnLevel2 && control != btnLevel3 && control != btnReturnToMainMenu)
                 {
-                    control.Visible = false;
+                    control.Visible = false;                                                        // Reszta przycisków ukryta
                 }
             }
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku poziomu 1
         private void BtnLevel1_Click(object sender, EventArgs e)
         {
-            Level_1 level_1 = new Level_1();
-            level_1.FormClosed += (s, args) => {btnLevel2.Enabled = true;};
-            OpenLevel(level_1, sender);
+            Level_1 level_1 = new Level_1();                                                        // Tworzenie nowego obiektu poziomu 1
+            level_1.FormClosed += (s, args) => {btnLevel2.Enabled = true;};                         // Ustawienie zdarzenia, które w³¹czy przycisk poziomu 2 po zamkniêciu poziomu 1
+            OpenLevel(level_1, sender);                                                             // Otworzenie poziomu 1
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku poziomu 2
         private void BtnLevel2_Click(object sender, EventArgs e)
         {
-            Level_2 level_2 = new Level_2();
-            level_2.FormClosed += (s, args) => OpenLevel(new Level_3(), sender);
-            OpenLevel(level_2, sender);
+            Level_2 level_2 = new Level_2();                                                        // Tworzenie nowego obiektu poziomu 2
+            level_2.FormClosed += (s, args) => OpenLevel(new Level_3(), sender);                    // Ustawienie zdarzenia, które w³¹czy przycisk poziomu 3 po zamkniêciu poziomu 2
+            OpenLevel(level_2, sender);                                                             // Otworzenie poziomu 2
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku poziomu 3
         private void BtnLevel3_Click(object sender, EventArgs e)
         {
-            Level_3 level_3 = new Level_3();
-            OpenLevel(level_3, sender);
+            Level_3 level_3 = new Level_3();                                                        // Tworzenie nowego obiektu poziomu 2
+            OpenLevel(level_3, sender);                                                             // Otworzenie poziomu 3
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku do wyœwietlania informacji o sterowaniu
         private void BtnControls_Click(object sender, EventArgs e)
         {
+            // Definiowanie tekstu z informacjami o sterowaniu
             string controls = "STEROWANIE:\n" +
                               "W - RUCH W GÓRÊ\n" +
                               "A - RUCH W LEWO\n" +
@@ -211,22 +226,25 @@ namespace CyberguardGame
                               "D - RUCH W PRAWO\n" +
                               "LPM - LEWY PRZYCISK MYSZY";
 
-            infoLabel.Text = controls;
-            ShowInfoScreen();
+            infoLabel.Text = controls;                                                              // Ustawienie tekstu etykiety na tekst sterowania
+            ShowInfoScreen();                                                                       // Wywo³anie metody do wyœwietlania ekranu z informacjami
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku do wyœwietlania zasad gry
         private void BtnRules_Click(object sender, EventArgs e)
         {
             string rules = "Wcielasz siê w rolê specjalisty ds. bezpieczeñstwa sieciowego, chroni¹c wirtualne biuro przed zagro¿eniami.";
-            infoLabel.Text = rules;
-            ShowInfoScreen();
+            infoLabel.Text = rules;                                                                 // Ustawienie tekstu etykiety na tekst z zasadami gry
+            ShowInfoScreen();                                                                       // Wywo³anie metody do wyœwietlania ekranu z informacjami
         }
 
+        // Metoda do wyœwietlania ekranu z informacjami 
         private void ShowInfoScreen()
         {
-            infoLabel.Visible = true;
-            btnBack_2.Visible = true;
+            infoLabel.Visible = true;                                                               // Widocznoœæ etykiety
+            btnBack_2.Visible = true;                                                               // Widocznoœæ drugiego przycisku powrotu
             
+            // Wystylizowanie etykiety potrzebnej do wyœwietlania informacji
             infoLabel.BackColor = Color.Black;
             infoLabel.BorderStyle = BorderStyle.FixedSingle;
             infoLabel.Padding = new Padding(10);
@@ -235,59 +253,69 @@ namespace CyberguardGame
             infoLabel.Font = new System.Drawing.Font("Snap ITC", 16);
             infoLabel.ForeColor = SystemColors.HighlightText;
 
+            // Ukrycie wszystkich przycisków oprócz drugiego przycisku powrotu
             foreach (Control control in this.Controls)
             {
                 if (control is Button && control != btnBack_2)
                 {
-                    control.Visible = false;
+                    control.Visible = false;                                                        // Reszta przycisków ukryta
                 }
             }
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku powrotu
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            infoLabel.Visible = false;
-            btnBack.Visible = false;
+            infoLabel.Visible = false;                                                              // Widocznoœæ etykiety
+            btnBack.Visible = false;                                                                // Widocznoœæ przycisku powrotu
 
+            // Przywrócenie widocznoœci przycisków poziomów i przycisku powrotu do menu g³ównego
             foreach (Control control in this.Controls)
             {
                 if (control is Button && (control == btnLevel1 || control == btnLevel2 || control == btnLevel3 || control == btnReturnToMainMenu))
                 {
-                    control.Visible = true;
+                    control.Visible = true;                                                         // Widocznoœæ przycisków
                 }
             }
         }
 
+        // Metoda obs³uguj¹ca klikniêcie drugiego przycisku powrotu
         private void BtnBack_Click_2(object sender, EventArgs e)
         {
-            infoLabel.Visible = false;
-            btnBack_2.Visible = false;
+            infoLabel.Visible = false;                                                              // Widocznoœæ etykiety
+            btnBack_2.Visible = false;                                                              // Widocznoœæ przycisku powrotu
 
+            // Przywrócenie widocznoœci przycisków poziomów i przycisku powrotu do menu g³ównego
             foreach (Control control in this.Controls)
             {
                 if (control is Button && (control == BtnStart || control == BtnControls || control == BtnRules))
                 {
-                    control.Visible = true;
+                    control.Visible = true;                                                         // Widocznoœæ przycisków
                 }
             }
         }
 
+        // Metoda obs³uguj¹ca klikniêcie przycisku powrotu do menu g³ównego
         private void BtnReturnToMainMenu_Click(object sender, EventArgs e)
         {
+            // Ukrycie przycisków z poziomami i przycisku powrotu do g³ównego menu
             btnLevel1.Visible = false;
             btnLevel2.Visible = false;
             btnLevel3.Visible = false;
             btnReturnToMainMenu.Visible = false;
 
+            // Przywrócenie widocznoœci przycisków startowych i kontrolnych
             BtnStart.Visible = true;
             BtnControls.Visible = true;
             BtnRules.Visible = true;
         }
 
+        // Metoda do wyœwietlania g³ównego panelu
         public void ShowMainPanel()
         {
-            mainPanel.Visible = true;
+            mainPanel.Visible = true;                                                               // Ustawienie widocznoœci g³ównego panelu na prawdê
 
+            // Przywrócenie widocznoœci przycisków w g³ównym panelu
             foreach (Control control in mainPanel.Controls)
             {
                 if (control is Button button && (button == BtnStart || button == BtnControls || button == BtnRules))
@@ -296,11 +324,12 @@ namespace CyberguardGame
                 }
             }
 
+            // Sprawdzenie, czy aktywny poziom istnieje
             if (activeLevel != null)
             {
-                mainPanel.Controls.Remove(activeLevel);
-                activeLevel.Close();
-                activeLevel = null;
+                mainPanel.Controls.Remove(activeLevel);                                             // Usuniêcie aktywnego poziomu z g³ównego panelu
+                activeLevel.Close();                                                                // Zamkniêcie aktywnego poziomu
+                activeLevel = null;                                                                 // Ustawienie aktywnego poziomu na wartoœæ null
             }
         }
     }
