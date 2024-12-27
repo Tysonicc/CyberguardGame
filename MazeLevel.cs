@@ -7,6 +7,7 @@ public class MazeLevel                                              // Klasa rep
     public int Width => Grid.GetLength(1);                          // Liczba kolumn (szerokość labiryntu)
     public int Height => Grid.GetLength(0);                         // Liczba wierszy (wysokość labiryntu)
 
+    // Konstruktor klasy, który inicjalizuje macierz labiryntu i punkt startowy oraz końcowy macierzy
     public MazeLevel(int[,] grid, (int X, int Y) startPoint, (int X, int Y) endPoint)
     {
         Grid = grid;                                                // Ustawienie macierzy labiryntu
