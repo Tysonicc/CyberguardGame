@@ -2,30 +2,41 @@
 
 namespace CyberguardGame;
 
-public class Maze                                   /** Klasa reprezentująca labirynt */
+/** Klasa reprezentujaca labirynt */
+public class Maze                                   
 {
-    public int[,] Grid {get; private set;}          /** Macierz reprezentująca labirynt */
-    public int Width {get; private set;}            /** Szerokość labiryntu */
-    public int Height {get; private set;}           /** Wysokość labiryntu */
+    /** Macierz reprezentujaca labirynt */
+    public int[,] Grid {get; private set;}
+    /** Szerokosc labiryntu */
+    public int Width {get; private set;}
+    /** Wysokosc labiryntu */
+    public int Height {get; private set;}           
+    
     public (int X, int Y) EndPoint {get; set;}
 
-    public Maze(int width, int height)              /** Konstruktor klasy, który inicjalizuje szerokość i wysokość labiryntu */
+    /** Konstruktor klasy, ktory inicjalizuje szerokosz i wysokosc labiryntu */
+    public Maze(int width, int height)              
     {
-        Width = width;                              /** Ustawienie szerokości labiryntu */
-        Height = height;                            /** Ustawienie wysokości labiryntu */
-        Grid = new int[height, width];              /** Inicjalizacja macierzy */
+        /** Ustawienie szerokosci labiryntu */
+        Width = width;
+        /** Ustawienie wysokosci labiryntu */
+        Height = height;
+        /** Inicjalizacja macierzy */
+        Grid = new int[height, width];              
     }
 
     /** Generowanie labiryntu na podstawie danej macierzy */
     public void GenerateMaze(int[,] matrix, (int X, int Y) endPoint)
     {
-        /** Sprawdzenie, czy rozmiar macierzy zgadza się z wymiarami labiryntu  */
+        /** Sprawdzenie, czy rozmiar macierzy zgadza sie z wymiarami labiryntu  */
         if (matrix.GetLength(0) != Height || matrix.GetLength(1) != Width)
         {
-            throw new ArgumentException("Rozmiar macierzy nie zgadza się z wymiarami labiryntu.");
+            throw new ArgumentException("Rozmiar macierzy nie zgadza sie z wymiarami labiryntu.");
         }
 
-        Grid = matrix;                              /** Ustawienie macierzy labiryntu */
-        this.EndPoint = endPoint;                   /** Ustawienie punktu końcowego */
+        /** Ustawienie macierzy labiryntu */
+        Grid = matrix;
+        /** Ustawienie punktu końcowego */
+        this.EndPoint = endPoint;                   
     }
 }

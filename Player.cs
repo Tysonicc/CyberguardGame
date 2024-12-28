@@ -1,48 +1,60 @@
 ﻿using CyberguardGame;
 
-public class Player                                     /** Klasa reprezentująca pozycję gracza */
+/** Klasa reprezentujaca pozycje gracza */
+public class Player                                     
 {
-    public int X {get; private set;}                    /** Właściwość reprezentująca pozycję gracza na osi X */
-    public int Y {get; private set;}                    /** Właściwość reprezentująca pozycję gracza na osi Y */
-    public Player(int x, int y)                         /** Konstruktor klasy, który inicjalizuje pozycję gracza */
+    /** Wlasciwosc reprezentujaca pozycje gracza na osi X */
+    public int X {get; private set;}
+    /** Wlasciwosc reprezentujaca pozycje gracza na osi Y */
+    public int Y {get; private set;}
+    /** Konstruktor klasy, ktory inicjalizuje pozycje gracza */
+    public Player(int x, int y)                         
     {
-        X = x;                                          /** Ustawienie pozycji X gracza */
-        Y = y;                                          /** Ustawienie pozycji Y gracza */
+        /** Ustawienie pozycji X gracza */
+        X = x;
+        /** Ustawienie pozycji Y gracza */
+        Y = y;                                          
     }
 
-    public void Move(Keys key, Maze maze)               /** Metoda do poruszania się gracza w labiryncie */
+    /** Metoda do poruszania sie gracza w labiryncie */
+    public void Move(Keys key, Maze maze)               
     {
-        int newX = X;                                   /** Zmienna potrzebna do przechowania nowej pozycji X gracza */
-        int newY = Y;                                   /** Zmienna potrzebna do przechowania nowej pozycji Y gracza */
+        /** Zmienna potrzebna do przechowania nowej pozycji X gracza */
+        int newX = X;
+        /** Zmienna potrzebna do przechowania nowej pozycji Y gracza */
+        int newY = Y;
 
-        switch (key)                                    /** Poruszanie się gracza */
+        /** Poruszanie sie gracza */
+        switch (key)                                    
         {
-            case Keys.W:                                /** Ruch w górę */
-                
+            /** Ruch w gore */
+            case Keys.W:                     
                 newY--;
                 break;
-            
-            case Keys.A:                                /** Ruch w lewo */
-                
+
+            /** Ruch w lewo */
+            case Keys.A:              
                 newX--;
                 break;
-            
-            case Keys.S:                                /** Ruch w dół */
-                
+
+            /** Ruch w dol */
+            case Keys.S:                                
                 newY++;
                 break;
-            
-            case Keys.D:                                /** Ruch w prawo */
-                
+
+            /** Ruch w prawo */
+            case Keys.D:           
                 newX++;
                 break;
         }
 
-        /** Sprawdzenie, czy nowa pozycja gracza jest w obrębie labiryntu i nie jest ścianą */
+        /** Sprawdzenie, czy nowa pozycja gracza jest w obrebie labiryntu i nie jest sciana */
         if (newX >= 0 && newX < maze.Width && newY >= 0 && newY < maze.Height && maze.Grid[newY, newX] != 1)
         {
-            X = newX;                                   /** Nowa pozycja gracza na osi X */
-            Y = newY;                                   /** Nowa pozycja gracza na osi Y */
+            /** Nowa pozycja gracza na osi X */
+            X = newX;
+            /** Nowa pozycja gracza na osi Y */
+            Y = newY;                                   
         }
     }
 }
