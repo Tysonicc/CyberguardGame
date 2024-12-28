@@ -5,16 +5,21 @@ namespace CyberguardGame
 {
     public partial class MainGame : Form
     {
-        public Label infoLabel;                                                                    /** Etykieta do wyœwietlania informacji */
+        public Label infoLabel;                                                                     /** Etykieta do wyœwietlania informacji */
 
-        public Button btnBack, btnBack_2, btnLevel1, btnLevel2, btnLevel3, btnReturnToMainMenu;    /** Przyciski powrotu, przyciski poziomów trudnoœci */
+        public Button btnBack;                                                                      /** Przycisk powrotu */
+        public Button btnBack_2;                                                                    /** Drugi przycisk powrotu */
+        public Button btnLevel1;                                                                    /** Przycisk poziomu 1 */
+        public Button btnLevel2;                                                                    /** Przycisk poziomu 2 */
+        public Button btnLevel3;                                                                    /** Przycisk poziomu 3 */
+        public Button btnReturnToMainMenu;                                                          /** Przycisk powrotu do menu g³ównego */
 
-        public Panel mainPanel;                                                                    /** G³ówny panel  */
+        public Panel mainPanel;                                                                     /** G³ówny panel  */
 
-        public bool level1Completed = false;                                                       /** Flaga do œledzenia ukoñczenia poziomu 1 */
-        public bool level2Completed = false;                                                       /** Flaga do œledzenia ukoñczenia poziomu 2 */
+        public bool level1Completed = false;                                                        /** Flaga do œledzenia ukoñczenia poziomu 1 */
+        public bool level2Completed = false;                                                        /** Flaga do œledzenia ukoñczenia poziomu 2 */
 
-        public Form activeLevel = new Form();                                                      /** Aktywny poziom */
+        public Form activeLevel = new Form();                                                       /** Aktywny poziom */
 
         public MainGame()
         {
