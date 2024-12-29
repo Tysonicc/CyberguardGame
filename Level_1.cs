@@ -6,104 +6,141 @@ namespace CyberguardGame
 {
     public partial class Level_1 : Form
     {
-        public Button btnBack;                                  /** Przycisk powrotu */
-        
-        public Panel optionsPanel;                              /** Panel z kontrolkami */
-        public Panel scorePanel, timePanel;                     /** Panele z punktami i czasem */
-        public Panel mazePanel;                                 /** Panel do wyświetlania labiryntu */
-        public Panel responsePanel;                             /** Panel do wyświetlania wiadomości */
-        public Panel emailPanel;                                /** Panel do wyświetlania maila */
-        public Panel suspiciousLinkPanel;                       /** Panel do wyświetlania podejrzanego linku */
-        public Panel emailPanel_2;                              /** Panel do wyświetlania drugiego maila */
-        public Panel completionPanel;                           /** Panel informacyjny po ukończeniu poziomu */
-        public Panel notificationPanel;                         /** Panel powiadomienia o wygranej */
+        /** Przycisk powrotu */
+        private Button btnBack;
 
-        public Label scoreLabel, timerLabel;                    /** Etykieta do pokazywania czasu i wyniku punktowego */
-        public Label panelTitle;                                /** Etykieta wyświetlająca zabezpieczenia serwera */
+        /** Panel z kontrolkami */
+        private Panel optionsPanel;
+        /** Panele z punktami i czasem */
+        private Panel scorePanel, timePanel;
+        /** Panel do wyswietlania labiryntu */
+        private Panel mazePanel;
+        /** Panel do wyswietlania wiadomosci */
+        private Panel responsePanel;
+        /** Panel do wyswietlania maila */
+        private Panel emailPanel;
+        /** Panel do wyswietlania podejrzanego linku */
+        private Panel suspiciousLinkPanel;
+        /** Panel do wyswietlania drugiego maila */
+        private Panel emailPanel_2;
+        /** Panel informacyjny po ukończeniu poziomu */
+        private Panel completionPanel;
+        /** Panel powiadomienia o wygranej */
+        private Panel notificationPanel;
 
-        public CheckBox checkBox1, checkBox2, checkBox3;        /** Kontrolki do zaznaczania */
+        /** Etykieta do pokazywania czasu i wyniku punktowego */
+        private Label scoreLabel, timerLabel;
+        /** Etykieta wyswietlajaca zabezpieczenia serwera */
+        private Label panelTitle;
+        /** Kontrolki do zaznaczania */
+        private CheckBox checkBox1, checkBox2, checkBox3;
 
-        public Maze maze;                                       /** Obiekt labiryntu */
-        public Player player;                                   /** Obiekt gracza */
-        
-        public const int cellWidth = 40;                        /** Szerokość komórki */
-        public const int cellHeight = 40;                       /** Wysokość komórki */
+        /** Obiekt labiryntu */
+        private Maze maze;
+        /** Obiekt gracza */
+        private Player player;
 
-        public int totalPoints = 0;                             /** Zmienna do przechowywania punktów */
-        public int elapsedTime = 0;                             /** Licznik czasu w sekundach */
+        /** Szerokosz komorki */
+        private const int cellWidth = 40;
+        /** Wysokosz komorki */
+        private const int cellHeight = 40;
 
-        public System.Windows.Forms.Timer gameTimer;            /** Timer do liczenia czasu */
-        public System.Windows.Forms.Timer defenderTimer;        /** Timer do odznaczania Windows Defender */
-        public System.Windows.Forms.Timer responseTimer;        /** Timer do odliczania czasu na odpowiedź */
-        public System.Windows.Forms.Timer antiVirusTimer;       /** Timer do zarządzania kontrolką Antywirus */
-        public System.Windows.Forms.Timer emailTimer;           /** Timer do wyświetlania maila */
-        public System.Windows.Forms.Timer suspiciousLinkTimer;  /** Timer do wyświetlania panelu z podejrzanym linkiem */
-        public System.Windows.Forms.Timer emailTimer_2;         /** Timer do wyświetlania maila */
-        public System.Windows.Forms.Timer notificationTimer;    /** Timer do wyświetlania powiadomienia */
+        /** Zmienna do przechowywania punktow */
+        private int totalPoints = 0;
+        /** Licznik czasu w sekundach */
+        private int elapsedTime = 0;
 
-        public bool checkBox1Checked = false;                   /** Flaga dla checkboxa 1 */
-        public bool checkBox2Checked = false;                   /** Flaga dla checkboxa 2 */
-        public bool checkBox3Checked = false;                   /** Flaga dla checkboxa 3 */
-        public bool isMazeCompleted = false;                    /** Flaga dla ukończenia labiryntu */
-        public bool serverSecuredMessageShown = false;          /** Flaga dla wyświetlenia komunikatu o zabezpieczeniu serwera */
-        public bool isResponsePanelShown = false;               /** Flaga dla wyświetlenia odpowiedzi */
-        public bool isEmailPanelShown = false;                  /** Flaga dla wyświetlenia maila */
-        public bool isSuspiciousLinkPanelShown = false;         /** Flaga dla wyświetlenia podejrzanego linku */
-        public bool isEmailPanel2Shown = false;                 /** Flaga dla wyświetlenia drugiego maila */
-        public bool isNotificationPanelShown = false;           /** Flaga dla wyświetlenia powiadomienia o wygranej */
-        public bool isNotificationShown = false;                /** Flaga dla wyświetlenia powiadomienia o wygaśnięciu kontrolki */
+        /** Timer do liczenia czasu */
+        private System.Windows.Forms.Timer gameTimer;
+        /** Timer do odznaczania Windows Defender */
+        private System.Windows.Forms.Timer defenderTimer;
+        /** Timer do odliczania czasu na odpowiedz */
+        private System.Windows.Forms.Timer responseTimer;
+        /** Timer do zarzadzania kontrolka Antywirus */
+        private System.Windows.Forms.Timer antiVirusTimer;
+        /** Timer do wyswietlania maila */
+        private System.Windows.Forms.Timer emailTimer;
+        /** Timer do wyswietlania panelu z podejrzanym linkiem */
+        private System.Windows.Forms.Timer suspiciousLinkTimer;
+        /** Timer do wyswietlania maila */
+        private System.Windows.Forms.Timer emailTimer_2;
+        /** Timer do wyswietlania powiadomienia */
+        private System.Windows.Forms.Timer notificationTimer;
 
-        public Form activeLevel = new Form();
+        /** Flaga dla checkboxa 1 */
+        private bool checkBox1Checked = false;
+        /** Flaga dla checkboxa 2 */
+        private bool checkBox2Checked = false;
+        /** Flaga dla checkboxa 3 */
+        private bool checkBox3Checked = false;
+        /** Flaga dla ukończenia labiryntu */
+        private bool isMazeCompleted = false;
+        /** Flaga dla wyswietlenia komunikatu o zabezpieczeniu serwera */
+        private bool serverSecuredMessageShown = false;
+        /** Flaga dla wyswietlenia odpowiedzi */
+        private bool isResponsePanelShown = false;
+        /** Flaga dla wyswietlenia maila */
+        private bool isEmailPanelShown = false;
+        /** Flaga dla wyswietlenia podejrzanego linku */
+        private bool isSuspiciousLinkPanelShown = false;
+        /** Flaga dla wyswietlenia drugiego maila */
+        private bool isEmailPanel2Shown = false;
+        /** Flaga dla wyswietlenia powiadomienia o wygranej */
+        private bool isNotificationPanelShown = false;
+        /** Flaga dla wyswietlenia powiadomienia o wygasnieciu kontrolki */
+        private bool isNotificationShown = false;                
+
+        private Form activeLevel = new Form();
 
         /** Konstruktor formularzu Level_1 */
         public Level_1()
         {
-            InitializeComponent();                              /** Inicjalizacja komponentów formularza */
+            InitializeComponent();                              /** Inicjalizacja komponentow formularza */
             InitializeGame();                                   /** Inicjalizacja gry  */
             InitializeTimer();                                  /** Inicjalizacja timera */
         }
 
-        /** Metoda, która służy do otwierania danego poziomu */
-        public void OpenLevel(Form levelForm)
+        /** Metoda, ktora sluzy do otwierania danego poziomu */
+        private void OpenLevel(Form levelForm)
         {
             if (activeLevel != null)
             {
-                activeLevel.Close();                            /** Zamknięcie aktualnego poziomu, jeżeli jest otwarty */
+                activeLevel.Close();                            /** Zamkniecie aktualnego poziomu, jezeli jest otwarty */
             }
 
             activeLevel = levelForm;                            /** Ustawienie nowego poziomu jako aktywnego */
-            levelForm.TopLevel = false;                         /** Ustawienie poziomu jako podrzędnego */
+            levelForm.TopLevel = false;                         /** Ustawienie poziomu jako podrzednego */
             levelForm.FormBorderStyle = FormBorderStyle.None;   /** Usuwanie ramki */
-            levelForm.Dock = DockStyle.Fill;                    /** Wypełnianie panelu */
+            levelForm.Dock = DockStyle.Fill;                    /** Wypelnianie panelu */
 
             this.Controls.Add(levelForm);                       /** Dodawanie poziomu do formularza */
             levelForm.BringToFront();                           /** Przeniesienie poziomu na wierzch */
             levelForm.Show();                                   /** Pokazanie poziomu */
         }
 
-        /** Metoda, która służy do inicjalizowania poziomu gry */
-        public void InitializeGame()
+        /** Metoda, ktora sluzy do inicjalizowania poziomu gry */
+        private void InitializeGame()
         {
-            /** Tworzenie nowego obiektu labiryntu na podstawie poziomu łatwego */
+            /** Tworzenie nowego obiektu labiryntu na podstawie poziomu latwego */
             maze = new Maze(MazeLevel.Easy.Width, MazeLevel.Easy.Height);
             maze.GenerateMaze(MazeLevel.Easy.Grid, MazeLevel.Easy.EndPoint);
             
             /** Ustawienie gracza w punkcie startowym */
             player = new Player(MazeLevel.Easy.StartPoint.X, MazeLevel.Easy.StartPoint.Y);
 
-            /** Tworzenie panelu do wyświetlania labiryntu */
+            /** Tworzenie panelu do wyswietlania labiryntu */
             mazePanel = new BufforedPanel();
             mazePanel.Size = new Size(MazeLevel.Easy.Width * cellWidth + 50,  MazeLevel.Easy.Height * cellHeight + 50);
             mazePanel.Location = new Point((this.ClientSize.Width - mazePanel.Width) / 2, (this.ClientSize.Height - mazePanel.Height) / 2);
 
-            /** Ustawienie właściwości panelu labiryntu */
+            /** Ustawienie wlasciwosci panelu labiryntu */
             mazePanel.BackColor = Color.LightSteelBlue;
             mazePanel.BorderStyle = BorderStyle.Fixed3D;
             mazePanel.Padding = new Padding(10);
 
             this.Controls.Add(mazePanel);
 
-            /** Podpięcie zdarzenia malowania panelu labiryntu */
+            /** Podpiecie zdarzenia malowania panelu labiryntu */
             mazePanel.Paint += new PaintEventHandler(MazePanel_Paint);
 
             this.KeyDown += new KeyEventHandler(Level_1_KeyDown);
@@ -125,7 +162,7 @@ namespace CyberguardGame
             btnBack.ForeColor = SystemColors.HighlightText;
             this.Controls.Add(btnBack);
 
-            /** Dodanie i wystylizowanie panelu, który przechowuje punktacje */
+            /** Dodanie i wystylizowanie panelu, ktory przechowuje punktacje */
             scorePanel = new Panel();
             scorePanel.Size = new System.Drawing.Size(200, 50);
             scorePanel.Location = new System.Drawing.Point(this.ClientSize.Width - scorePanel.Width - 20, 20);
@@ -135,7 +172,7 @@ namespace CyberguardGame
             scorePanel.Padding = new Padding(10);
             this.Controls.Add(scorePanel);
 
-            /** Dodanie i wystylizowanie etykiety przechowywującej punkty  */
+            /** Dodanie i wystylizowanie etykiety przechowywujacej punkty  */
             scoreLabel = new Label();
             scoreLabel.Text = "PUNKTY: " + totalPoints;
             scoreLabel.Location = new System.Drawing.Point(10, 10);
@@ -144,7 +181,7 @@ namespace CyberguardGame
             scoreLabel.ForeColor = SystemColors.HighlightText;
             scorePanel.Controls.Add(scoreLabel);
 
-            /** Dodanie i wystylizowanie panelu, który przechowuje timer */
+            /** Dodanie i wystylizowanie panelu, ktory przechowuje timer */
             timePanel = new Panel();
             timePanel.Size = new System.Drawing.Size(200, 50);
             timePanel.Location = new System.Drawing.Point(this.ClientSize.Width - timePanel.Width - 20, 80);
@@ -154,7 +191,7 @@ namespace CyberguardGame
             timePanel.Padding = new Padding(10);
             this.Controls.Add(timePanel);
 
-            /** Dodanie i wystylizowanie etykiety przechowywującej timer */
+            /** Dodanie i wystylizowanie etykiety przechowywujacej timer */
             timerLabel = new Label();
             timerLabel.Text = "CZAS: 0 s";
             timerLabel.Location = new System.Drawing.Point(10, 10);
@@ -164,22 +201,22 @@ namespace CyberguardGame
             timePanel.Controls.Add(timerLabel);
         }
 
-        /** Metoda, która służy do inicjalizacji timera */
-        public void InitializeTimer()
+        /** Metoda, ktora sluzy do inicjalizacji timera */
+        private void InitializeTimer()
         {
             gameTimer = new System.Windows.Forms.Timer();
-            gameTimer.Interval = 1000;                          /** Ustawienie interwału timera na 1 sekundę */
-            gameTimer.Tick += GameTimer_Tick;                   /** Podpięcie zdarzenia tick do metody obsługującej */
-            gameTimer.Start();                                  /** Rozpoczęcie odliczania timera */
+            gameTimer.Interval = 1000;                          /** Ustawienie interwalu timera na 1 sekunde */
+            gameTimer.Tick += GameTimer_Tick;                   /** Podpiecie zdarzenia tick do metody obslugujacej */
+            gameTimer.Start();                                  /** Rozpoczecie odliczania timera */
         }
 
-        /** Metoda, która służy do uruchomienia metody tick timera */
-        public void GameTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora sluzy do uruchomienia metody tick timera */
+        private void GameTimer_Tick(object sender, EventArgs e)
         {
-            elapsedTime++;                                      /** Zwiększanie czasu gry o 1 sekundę */
+            elapsedTime++;                                      /** Zwiekszanie czasu gry o 1 sekunde */
             timerLabel.Text = "CZAS: " + elapsedTime + " s";    /** Aktualizacja etykiety czasu */
 
-            /** Jeżeli czas gry osiągnął 60 sekund -> zakończ grę */
+            /** Jezeli czas gry osiagnal 60 sekund -> zakończ gre */
             if (elapsedTime >= 60)
             {
                 EndGame();
@@ -187,13 +224,13 @@ namespace CyberguardGame
         }
 
         /** Metoda odpowiedzialna za malowanie panelu labiryntu */
-        public void MazePanel_Paint(object sender, PaintEventArgs e)
+        private void MazePanel_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;                                                        /** Uzyskanie obiektu Graphics do rysowania na panelu */
         
             int margin = 10;                                                                /** Ustawienie marginesu dla rysowania */
-            int offsetX = (mazePanel.Width - (maze.Width * cellWidth)) / 2;                 /** Wyśrodkowanie labiryntu w poziomie */
-            int offsetY = (mazePanel.Height - (maze.Height * cellHeight)) / 2;              /** Wyśrodkowanie labiryntu w pionie */
+            int offsetX = (mazePanel.Width - (maze.Width * cellWidth)) / 2;                 /** Wysrodkowanie labiryntu w poziomie */
+            int offsetY = (mazePanel.Height - (maze.Height * cellHeight)) / 2;              /** Wysrodkowanie labiryntu w pionie */
 
             for (int y = 0; y < maze.Height; y++)
             {
@@ -202,16 +239,16 @@ namespace CyberguardGame
                     /** Sprawdzenie, czy jest to pozycja gracza */
                     if (x == player.X && y == player.Y)
                     {
-                        /** Ustawienie tła na ciemno-szare dla pola, na którym stoi gracz */
+                        /** Ustawienie tla na ciemno-szare dla pola, na ktorym stoi gracz */
                         g.FillRectangle(Brushes.ForestGreen, offsetX + x * cellWidth, offsetY + y * cellHeight, cellWidth, cellHeight);
                     }
                     else
                     {
-                        /** Ustawienie tła na czarne dla pozostałych pól */
+                        /** Ustawienie tla na czarne dla pozostalych pol */
                         g.FillRectangle(Brushes.Black, offsetX + x * cellWidth, offsetY + y * cellHeight, cellWidth, cellHeight);
                     }
 
-                    string text = maze.Grid[y, x] == 1 ? "1" : "0";                         /** Ustawienie tekstu na "1" dla ściany, "0" dla przestrzeni */
+                    string text = maze.Grid[y, x] == 1 ? "1" : "0";                         /** Ustawienie tekstu na "1" dla sciany, "0" dla przestrzeni */
 
                     Font font = new Font("Arial", 16);
                     Brush textBrush = Brushes.Green;
@@ -223,7 +260,7 @@ namespace CyberguardGame
             Brush playerBrush = Brushes.Black;
             g.DrawString("0", playerFont, playerBrush, offsetX + player.X * cellWidth + cellWidth / 4, offsetY + player.Y * cellHeight + cellHeight / 4);
 
-            /** Sprawdzenie, czy wiadomość o zabezpieczeniu serwera została już wyświetlona */
+            /** Sprawdzenie, czy wiadomosz o zabezpieczeniu serwera zostala juz wyswietlona */
             if (!serverSecuredMessageShown)
             {                                                
                 MessageBox.Show("Zabezpiecz serwer!", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -231,19 +268,19 @@ namespace CyberguardGame
             }
         }
 
-        /** Metoda, która służy do obsługi zdarzeń naciśnięcia danego klawisza oraz do rozpoczęcia innych metod */
-        public void Level_1_KeyDown(object sender, KeyEventArgs e)
+        /** Metoda, ktora sluzy do obslugi zdarzeń nacisniecia danego klawisza oraz do rozpoczecia innych metod */
+        private void Level_1_KeyDown(object sender, KeyEventArgs e)
         {
-            /** Jeżeli czas gry osiągnął 60 sekund -> zakończ grę */
+            /** Jezeli czas gry osiagnal 60 sekund -> zakończ gre */
             if (elapsedTime >= 60)
             {
                 EndGame();
             }
             
             player.Move(e.KeyCode, maze);                                               /** Przekazanie obiektu maze do metody Move */
-            mazePanel.Invalidate();                                                     /** Odświeżenie panelu */
+            mazePanel.Invalidate();                                                     /** Odswiezenie panelu */
 
-            if (player.X == maze.EndPoint.X && player.Y == maze.EndPoint.Y)             /** Sprawdzenie, czy gracz osiągnął punkt końcowy */
+            if (player.X == maze.EndPoint.X && player.Y == maze.EndPoint.Y)             /** Sprawdzenie, czy gracz osiagnal punkt końcowy */
             {            
                 totalPoints += 100; 
                 scoreLabel.Text = "PUNKTY: " + totalPoints;
@@ -253,31 +290,31 @@ namespace CyberguardGame
 
                 isMazeCompleted = true;
 
-                if (!isResponsePanelShown)                                              /** Jeśli panel z odpowiedzią nie był wyświetlony -> uruchom timer */
+                if (!isResponsePanelShown)                                              /** Jesli panel z odpowiedzia nie byl wyswietlony -> uruchom timer */
                 {
                     StartResponseTimer();
                     isResponsePanelShown = true;
                 }
 
-                if (!isEmailPanelShown)                                                 /** Jeśli panel z mailem nie był wyświetlony -> uruchom timer */
+                if (!isEmailPanelShown)                                                 /** Jesli panel z mailem nie byl wyswietlony -> uruchom timer */
                 {
                     StartEmailTimer();
                     isEmailPanelShown = true;
                 }
 
-                if (!isSuspiciousLinkPanelShown)                                        /** Jeśli panel z podejrzanym linkiem nie był wyświetlony -> uruchom timer */
+                if (!isSuspiciousLinkPanelShown)                                        /** Jesli panel z podejrzanym linkiem nie byl wyswietlony -> uruchom timer */
                 {
                     StartSuspiciousLinkTimer();
                     isSuspiciousLinkPanelShown = true;
                 }
 
-                if (!isEmailPanel2Shown)                                                /** Jeśli panel z drugim mailem nie był wyświetlony -> uruchom timer */
+                if (!isEmailPanel2Shown)                                                /** Jesli panel z drugim mailem nie byl wyswietlony -> uruchom timer */
                 {
                     StartEmailTimer_2();
                     isEmailPanel2Shown = true;
                 }
 
-                if (!isNotificationPanelShown)                                          /** Jeśli panel z powiadomieniem o wygranej nie był wyświetlony -> uruchom timer */
+                if (!isNotificationPanelShown)                                          /** Jesli panel z powiadomieniem o wygranej nie byl wyswietlony -> uruchom timer */
                 {
                     StartNotificationTimer();
                     isNotificationPanelShown = true;
@@ -285,26 +322,26 @@ namespace CyberguardGame
             }
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla odpowiedzi */
-        public void StartResponseTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla odpowiedzi */
+        private void StartResponseTimer()
         {
             responseTimer = new System.Windows.Forms.Timer();
-            responseTimer.Interval = 8000;                                              /** Ustawienie interwału timera na 5 sekund */
-            responseTimer.Tick += ResponseTimer_Tick;                                   /** Podpięcie zdarzenia tick do metody obsługującej */
-            responseTimer.Start();                                                      /** Rozpoczęcie odliczania timera */
+            responseTimer.Interval = 8000;                                              /** Ustawienie interwalu timera na 5 sekund */
+            responseTimer.Tick += ResponseTimer_Tick;                                   /** Podpiecie zdarzenia tick do metody obslugujacej */
+            responseTimer.Start();                                                      /** Rozpoczecie odliczania timera */
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał -> pokaż panel z odpowiedzią */
-        public void ResponseTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal -> pokaz panel z odpowiedzia */
+        private void ResponseTimer_Tick(object sender, EventArgs e)
         { 
             responseTimer.Stop();                                                       /** Zatrzymanie timera */
-            ShowResponsePanel();                                                        /** Wyświetlanie metody z wyświetlaniem panelu */
+            ShowResponsePanel();                                                        /** Wyswietlanie metody z wyswietlaniem panelu */
         }
 
-        /** Metoda służąca do wyświetlenia i wystylizowania panelu odpowiedzi */
-        public void ShowResponsePanel()
+        /** Metoda sluzaca do wyswietlenia i wystylizowania panelu odpowiedzi */
+        private void ShowResponsePanel()
         {
-            /** Dodanie i wystylizowanie panelu z odpowiedzią */
+            /** Dodanie i wystylizowanie panelu z odpowiedzia */
             responsePanel = new Panel();
             responsePanel.Size = new System.Drawing.Size(250, 150);
             int leftMargin = 20;
@@ -345,7 +382,7 @@ namespace CyberguardGame
             sourceLabel.Location = new Point(10, 90);
             responsePanel.Controls.Add(sourceLabel);
 
-            /** Dodanie i wystylizowanie przycisków wyboru */
+            /** Dodanie i wystylizowanie przyciskow wyboru */
             Button btnAgree = new Button();
             btnAgree.Text = "Zgadzam się";
             btnAgree.Location = new Point(20, 120);
@@ -363,43 +400,43 @@ namespace CyberguardGame
             this.Controls.Add(responsePanel);
         }
 
-        /** Metoda służąca do obsługi odpowiedzi przez użytkownika */
-        public void HandleResponse(bool isAgreed)
+        /** Metoda sluzaca do obslugi odpowiedzi przez uzytkownika */
+        private void HandleResponse(bool isAgreed)
         {
-            if (isAgreed)                                           /** Jeśli użytkownik się zgodzi */
+            if (isAgreed)                                           /** Jesli uzytkownik sie zgodzi */
             {
                 checkBox3.Checked = false;                          /** Odznaczenie kontrolki Antywirusa */
-                totalPoints -= 50;                                  /** Odejmowanie punktów z głównego licznika*/
-                StartAntiVirusTimer();                              /** Włączenie timera dotyczącego Antywirusa */
+                totalPoints -= 50;                                  /** Odejmowanie punktow z glownego licznika*/
+                StartAntiVirusTimer();                              /** Wlaczenie timera dotyczacego Antywirusa */
             }
             else
             {
-                totalPoints += 100;                                 /** Dodawanie punktów do głównego licznika */
+                totalPoints += 100;                                 /** Dodawanie punktow do glownego licznika */
             }
 
             scoreLabel.Text = "PUNKTY: " + totalPoints;             /** Aktualizacja etykiety z punktami */
 
-            this.Controls.Remove(responsePanel);                    /** Wyłączenie panelu z odpowiedzią */
+            this.Controls.Remove(responsePanel);                    /** Wylaczenie panelu z odpowiedzia */
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla maila */
-        public void StartEmailTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla maila */
+        private void StartEmailTimer()
         {
             emailTimer = new System.Windows.Forms.Timer();
-            emailTimer.Interval = 15000;                                                /** Ustawienie interwału timera na 10 sekund */
-            emailTimer.Tick += EmailTimer_Tick;                                         /** Podpięcie zdarzenia tick do metody obsługującej */
-            emailTimer.Start();                                                         /** Rozpoczęcie odliczania timera */
+            emailTimer.Interval = 15000;                                                /** Ustawienie interwalu timera na 10 sekund */
+            emailTimer.Tick += EmailTimer_Tick;                                         /** Podpiecie zdarzenia tick do metody obslugujacej */
+            emailTimer.Start();                                                         /** Rozpoczecie odliczania timera */
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał -> pokaż panel z mailem */
-        public void EmailTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal -> pokaz panel z mailem */
+        private void EmailTimer_Tick(object sender, EventArgs e)
         {
             emailTimer.Stop();                                                          /** Zatrzymanie timera */
-            ShowEmailPanel();                                                           /** Wyświetlanie metody z wyświetlaniem panelu */
+            ShowEmailPanel();                                                           /** Wyswietlanie metody z wyswietlaniem panelu */
         }
 
-        /** Metoda służąca do wyświetlenia i wystylizowania panelu maila */
-        public void ShowEmailPanel()
+        /** Metoda sluzaca do wyswietlenia i wystylizowania panelu maila */
+        private void ShowEmailPanel()
         {
             /** Dodanie i wystylizowanie panelu z mailem */
             emailPanel = new Panel();
@@ -434,7 +471,7 @@ namespace CyberguardGame
             contentLabel.Location = new Point(10, 70);
             emailPanel.Controls.Add(contentLabel);
 
-            /** Dodanie i wystylizowanie przycisków wyboru */
+            /** Dodanie i wystylizowanie przyciskow wyboru */
             Button btnAgree = new Button();
             btnAgree.Text = "Zrób kopie";
             btnAgree.Location = new Point(30, 100);
@@ -450,24 +487,24 @@ namespace CyberguardGame
             this.Controls.Add(emailPanel);
         }
 
-        /** Metoda służąca do obsługi odpowiedzi przez użytkownika */
-        public void HandleEmailResponse(bool isAgreed)
+        /** Metoda sluzaca do obslugi odpowiedzi przez uzytkownika */
+        private void HandleEmailResponse(bool isAgreed)
         {
-            if (isAgreed)                                           /** Jeśli użytkownik się zgodzi */
+            if (isAgreed)                                           /** Jesli uzytkownik sie zgodzi */
             {
-                totalPoints += 100;                                 /** Dodawanie punktów do głównego licznika */
+                totalPoints += 100;                                 /** Dodawanie punktow do glownego licznika */
             }
             else
             {
-                totalPoints -= 50;                                  /** Odejmowanie punktów z głównego licznika*/
+                totalPoints -= 50;                                  /** Odejmowanie punktow z glownego licznika*/
             }
 
             scoreLabel.Text = "PUNKTY: " + totalPoints;             /** Aktualizacja etykiety z punktami */
-            this.Controls.Remove(emailPanel);                       /** Wyłączenie panelu z mailem */
+            this.Controls.Remove(emailPanel);                       /** Wylaczenie panelu z mailem */
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla podejrzanego linku */
-        public void StartSuspiciousLinkTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla podejrzanego linku */
+        private void StartSuspiciousLinkTimer()
         {
             suspiciousLinkTimer = new System.Windows.Forms.Timer();
             suspiciousLinkTimer.Interval = 20000;
@@ -475,15 +512,15 @@ namespace CyberguardGame
             suspiciousLinkTimer.Start();
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał -> pokaż panel z podejrzanym linkiem */
-        public void SuspiciousLinkTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal -> pokaz panel z podejrzanym linkiem */
+        private void SuspiciousLinkTimer_Tick(object sender, EventArgs e)
         {
             suspiciousLinkTimer.Stop();
             ShowSuspiciousLinkPanel();
         }
 
-        /** Metoda służąca do wyświetlenia i wystylizowania panelu z podejrzanym linkiem */
-        public void ShowSuspiciousLinkPanel()
+        /** Metoda sluzaca do wyswietlenia i wystylizowania panelu z podejrzanym linkiem */
+        private void ShowSuspiciousLinkPanel()
         {
             /** Dodanie i wystylizowanie panelu z podejrzanym linkiem */
             suspiciousLinkPanel = new Panel();
@@ -500,7 +537,7 @@ namespace CyberguardGame
             linkLabel.AutoSize = true;
             suspiciousLinkPanel.Controls.Add(linkLabel);
 
-            /** Dodanie i wystylizowanie przycisków wyboru */
+            /** Dodanie i wystylizowanie przyciskow wyboru */
             Button btnAgree = new Button();
             btnAgree.Text = "Sprawdzam";
             btnAgree.Location = new Point(30, 30);
@@ -516,8 +553,8 @@ namespace CyberguardGame
             this.Controls.Add(suspiciousLinkPanel);
         }
 
-        /** Metoda służąca do obsługi odpowiedzi przez użytkownika */
-        public void HandleSuspiciousLinkResponse(bool isAgreed)
+        /** Metoda sluzaca do obslugi odpowiedzi przez uzytkownika */
+        private void HandleSuspiciousLinkResponse(bool isAgreed)
         {
             if (isAgreed)
             {
@@ -539,8 +576,8 @@ namespace CyberguardGame
             suspiciousLinkPanel.Visible = false;
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla drugiego maila */
-        public void StartEmailTimer_2()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla drugiego maila */
+        private void StartEmailTimer_2()
         {
             emailTimer_2 = new System.Windows.Forms.Timer();
             emailTimer_2.Interval = 28000;
@@ -548,15 +585,15 @@ namespace CyberguardGame
             emailTimer_2.Start();
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał -> pokaż panel z drugim mailem */
-        public void EmailTimer_Tick_2(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal -> pokaz panel z drugim mailem */
+        private void EmailTimer_Tick_2(object sender, EventArgs e)
         {
             emailTimer_2.Stop();
             ShowEmailPanel_2();
         }
 
-        /** Metoda służąca do wyświetlenia i wystylizowania panelu drugiego maila */
-        public void ShowEmailPanel_2()
+        /** Metoda sluzaca do wyswietlenia i wystylizowania panelu drugiego maila */
+        private void ShowEmailPanel_2()
         {
             /** Dodanie i wystylizowanie panelu z drugim mailem */
             emailPanel_2 = new System.Windows.Forms.Panel();
@@ -591,16 +628,16 @@ namespace CyberguardGame
             contentLabel.Location = new Point(10, 70);
             emailPanel_2.Controls.Add(contentLabel);
 
-            /** Dodanie i wystylizowanie przycisków wyboru */
+            /** Dodanie i wystylizowanie przyciskow wyboru */
             Button btnAgree = new Button();
-            btnAgree.Text = "Zgadzam się";
+            btnAgree.Text = "Zgadzam sie";
             btnAgree.Location = new Point(30, 100);
             btnAgree.Click += (s, args) => { HandleEmailResponse_2(true); };
             btnAgree.AutoSize = true;
             emailPanel_2.Controls.Add(btnAgree);
 
             Button btnDisagree = new Button();
-            btnDisagree.Text = "Nie zgadzam się";
+            btnDisagree.Text = "Nie zgadzam sie";
             btnDisagree.Location = new Point(130, 100);
             btnDisagree.Click += (s, args) => { HandleEmailResponse_2(false); };
             btnDisagree.AutoSize = true;
@@ -609,8 +646,8 @@ namespace CyberguardGame
             this.Controls.Add(emailPanel_2);
         }
 
-        /** Metoda służąca do obsługi odpowiedzi przez użytkownika */
-        public void HandleEmailResponse_2(bool isAgreed)
+        /** Metoda sluzaca do obslugi odpowiedzi przez uzytkownika */
+        private void HandleEmailResponse_2(bool isAgreed)
         {
             if (isAgreed)
             {
@@ -629,8 +666,8 @@ namespace CyberguardGame
             emailPanel_2.Visible = false;
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla powiadomienia o wygranej */
-        public void StartNotificationTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla powiadomienia o wygranej */
+        private void StartNotificationTimer()
         {
             notificationTimer = new System.Windows.Forms.Timer();
             notificationTimer.Interval = 32000;
@@ -638,15 +675,15 @@ namespace CyberguardGame
             notificationTimer.Start();
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał -> pokaż panel z powiadomieniem o wygranej */
-        public void NotificationTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal -> pokaz panel z powiadomieniem o wygranej */
+        private void NotificationTimer_Tick(object sender, EventArgs e)
         {
             notificationTimer.Stop();
             ShowNotificationPanel();
         }
 
-        /** Metoda służąca do wyświetlenia i wystylizowania panelu z powiadomieniem o wygranej */
-        public void ShowNotificationPanel()
+        /** Metoda sluzaca do wyswietlenia i wystylizowania panelu z powiadomieniem o wygranej */
+        private void ShowNotificationPanel()
         {
             /** Dodanie i wystylizowanie panelu z powiadomieniem o wygranej */
             notificationPanel = new Panel();
@@ -658,7 +695,7 @@ namespace CyberguardGame
 
             /** Dodanie etykiet do panelu z powiadomieniem o wygranej */
             Label messageLabel = new Label();
-            messageLabel.Text = "GRATULACJE! WYGRAŁEŚ 1MLN DOLARÓW!";
+            messageLabel.Text = "GRATULACJE! WYGRAlEŚ 1MLN DOLARÓW!";
             messageLabel.Location = new Point(5, 20);
             messageLabel.AutoSize = true;
             notificationPanel.Controls.Add(messageLabel);
@@ -669,9 +706,9 @@ namespace CyberguardGame
             messageLabel_2.AutoSize = true;
             notificationPanel.Controls.Add(messageLabel_2);
 
-            /** Dodanie i wystylizowanie przycisków wyboru */
+            /** Dodanie i wystylizowanie przyciskow wyboru */
             Button btnAgree = new Button();
-            btnAgree.Text = "Wypłać";
+            btnAgree.Text = "Wyplać";
             btnAgree.Location = new Point(30, 70);
             btnAgree.Click += (s, args) => { HandleNotificationResponse(true); };
             btnAgree.AutoSize = true;
@@ -687,8 +724,8 @@ namespace CyberguardGame
             this.Controls.Add(notificationPanel);
         }
 
-        /** Metoda służąca do obsługi odpowiedzi przez użytkownika */
-        public void HandleNotificationResponse(bool isAgreed)
+        /** Metoda sluzaca do obslugi odpowiedzi przez uzytkownika */
+        private void HandleNotificationResponse(bool isAgreed)
         {
             if (isAgreed)
             {
@@ -705,8 +742,8 @@ namespace CyberguardGame
             notificationPanel.Visible = false;
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla znikającej kontrolki Antywirusa */
-        public void StartAntiVirusTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla znikajacej kontrolki Antywirusa */
+        private void StartAntiVirusTimer()
         {
             antiVirusTimer = new System.Windows.Forms.Timer();
             antiVirusTimer.Interval = 14000;
@@ -714,8 +751,8 @@ namespace CyberguardGame
             antiVirusTimer.Start();
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał */
-        public void AntiVirusTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal */
+        private void AntiVirusTimer_Tick(object sender, EventArgs e)
         {
             antiVirusTimer.Stop();
 
@@ -734,8 +771,8 @@ namespace CyberguardGame
             scoreLabel.Text = "PUNKTY: " + totalPoints;
         }
 
-        /** Metoda, która pokazuje panel z zabezpieczeniami serwera */
-        public void ShowOptionsPanel()
+        /** Metoda, ktora pokazuje panel z zabezpieczeniami serwera */
+        private void ShowOptionsPanel()
         {
             /** Dodanie i wystylizowanie panelu z kontrolkami do zaznaczania */
             optionsPanel = new Panel();
@@ -756,7 +793,7 @@ namespace CyberguardGame
 
             optionsPanel.Controls.Add(panelTitle);
 
-            /** Dodanie i wystylizowanie checkboxów do panelu */
+            /** Dodanie i wystylizowanie checkboxow do panelu */
             checkBox1 = new CheckBox();
             checkBox1.Text = "WINDOWS DEFENDER";
             checkBox1.Location = new System.Drawing.Point(10, 40);
@@ -784,8 +821,8 @@ namespace CyberguardGame
             StartDefenderTimer();
         }
 
-        /** Metoda, która inicjalizuje nowy timer do obsługi czasu dla znikającej kontrolki Windows Defender */
-        public void StartDefenderTimer()
+        /** Metoda, ktora inicjalizuje nowy timer do obslugi czasu dla znikajacej kontrolki Windows Defender */
+        private void StartDefenderTimer()
         {
             if (defenderTimer != null)
             {
@@ -798,8 +835,8 @@ namespace CyberguardGame
             defenderTimer.Start();
         }
 
-        /** Metoda, która jest wywoływana, gdy timer osiągnie ustawiony interwał*/
-        public void DefenderTimer_Tick(object sender, EventArgs e)
+        /** Metoda, ktora jest wywolywana, gdy timer osiagnie ustawiony interwal*/
+        private void DefenderTimer_Tick(object sender, EventArgs e)
         {
             defenderTimer.Stop();
 
@@ -813,8 +850,8 @@ namespace CyberguardGame
 
         
 
-        /** Metoda, która służy do zresetowania labiryntu -> pokaż labirynt jeszcze raz */
-        public void ResetMaze()
+        /** Metoda, ktora sluzy do zresetowania labiryntu -> pokaz labirynt jeszcze raz */
+        private void ResetMaze()
         {
             player = new Player(MazeLevel.Easy.StartPoint.X, MazeLevel.Easy.StartPoint.Y);
             mazePanel.Visible = true;
@@ -827,8 +864,8 @@ namespace CyberguardGame
             }
         }
 
-        /** Metoda, która służy do sprawdzania poprawności zaznaczenia kontrolek zabezpieczeń */
-        public void CheckBox_CheckedChanged(object sender, EventArgs e)
+        /** Metoda, ktora sluzy do sprawdzania poprawnosci zaznaczenia kontrolek zabezpieczeń */
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (sender == checkBox1 && !checkBox1Checked)
             {
@@ -852,8 +889,8 @@ namespace CyberguardGame
             }
         }
 
-        /** Metoda służąca do wyjścia do menu głównego */
-        public void BtnBack_Click(object sender, EventArgs e)
+        /** Metoda sluzaca do wyjscia do menu glownego */
+        private void BtnBack_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Czy jesteś pewny? Gra nie zostanie zapisana!", "Wyjście do menu głównego.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -863,8 +900,8 @@ namespace CyberguardGame
             }
         }
 
-        /** Metoda, która służy dla gracza do przypomnienia o pilnowaniu zaznaczania kontrolek */
-        public void NotifyWindowsDefenderDisabled()
+        /** Metoda, ktora sluzy dla gracza do przypomnienia o pilnowaniu zaznaczania kontrolek */
+        private void NotifyWindowsDefenderDisabled()
         {
             if (!isNotificationShown)
             {
@@ -874,10 +911,10 @@ namespace CyberguardGame
             
         }
 
-        /** Metoda, która kończy rozgrywkę */
-        public void EndGame()
+        /** Metoda, ktora kończy rozgrywke */
+        private void EndGame()
         {
-            /** Wyłączenie wszystkich kontrolek */
+            /** Wylaczenie wszystkich kontrolek */
             mazePanel.Visible = false;
             scorePanel.Visible = false;
             timePanel.Visible = false;
@@ -903,7 +940,7 @@ namespace CyberguardGame
 
             /** Dodanie etykiet */
             Label completionLabel = new Label();
-            completionLabel.Text = "PRZESZEDŁEŚ POZIOM 1!";
+            completionLabel.Text = "PRZESZEDlEŚ POZIOM 1!";
             completionLabel.AutoSize = true;
             completionLabel.Location = new Point(80, 10);            
             completionLabel.BackColor = Color.Transparent;
@@ -922,7 +959,7 @@ namespace CyberguardGame
             completionLabel_2.ForeColor = SystemColors.HighlightText;
             completionPanel.Controls.Add(completionLabel_2);
 
-            /** Dodanie przycisków wyboru */
+            /** Dodanie przyciskow wyboru */
             Button btnContinue = new Button();
             btnContinue.Text = "START POZIOM 2";
             btnContinue.Location = new Point(10, 90);
